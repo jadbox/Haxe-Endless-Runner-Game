@@ -43,9 +43,9 @@ class Scene implements ISystem
 	
 	public function add(e:Entity):Void {
 		//nodes.push(node);
-		viewList.push( e.get("view") );
-		posList.push ( e.get("pos") );
-		root.addChild(e.get("view"));
+		viewList.push( e.fetch(View) );
+		posList.push ( e.fetch(Pos) );
+		root.addChild(e.fetch(View));
 	}
 	
 	

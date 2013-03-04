@@ -22,12 +22,13 @@ class Entity
 		lookup = new Hash<Dynamic>();
 		
 	}
-	public inline function set(n:String, t:Dynamic):Dynamic {
-		lookup.set(n, t);
+	public inline function set(t:Dynamic):Dynamic {
+		trace( Type.getClassName(t) );
+		lookup.set(Type.getClassName(t), t);
 		return t;
 	}
-	public inline function get(n:String):Dynamic {
-		return lookup.get(n);
+	public function fetch(t:Class<Dynamic>):Dynamic {
+		return lookup.get(Type.getClassName(t));
 	}
 	public function exists(n:String):Bool {
 		return lookup.exists(n);

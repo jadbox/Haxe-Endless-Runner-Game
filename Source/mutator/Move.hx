@@ -22,8 +22,8 @@ class Move implements ISystem
 		posList = new Array<Pos>();
 	}
 	public function add(entity:Entity):Void {
-		posList.push(entity.get("pos"));
-		moveList.push(entity.get("movement"));
+		posList.push(entity.fetch(Pos));
+		moveList.push(entity.fetch(Movement));
 	}
 	public function start():Void {
 		
