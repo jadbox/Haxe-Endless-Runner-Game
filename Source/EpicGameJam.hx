@@ -9,6 +9,7 @@ import nme.display.Sprite;
 import nme.display.StageAlign;
 import nme.display.StageScaleMode;
 import nme.Lib;
+import mutator.Scene;
 
 
 /**
@@ -37,6 +38,10 @@ class EpicGameJam extends Sprite {
 		var e:Entity = new Entity();
 		e.set("Pos", new Pos());
 		e.set("View", View.get());
+		game.addEntity(e);
+		
+		var scene:Scene = new Scene(this);
+		game.addSystem(scene);
 	}
 	
 	

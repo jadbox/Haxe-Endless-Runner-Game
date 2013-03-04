@@ -1,4 +1,4 @@
-package system;
+package mutator;
 import model.Movement;
 import model.MoveNode;
 
@@ -23,7 +23,7 @@ class Move implements ISystem
 	}
 	public function update(time:Float):Void {
 		for (model in models) {
-			
+			model.pos.pt.offset(model.movement.vel.x, model.movement.vel.y);
 		}
 	}
 }

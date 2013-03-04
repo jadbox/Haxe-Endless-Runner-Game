@@ -22,6 +22,7 @@ class Engine extends Sprite
 	public function addEntity(entity:Entity):Void {
 		entities.push(entity);
 	}
+	
 	public function addSystem(system:ISystem):Void {
 		systems.push(system);
 	}
