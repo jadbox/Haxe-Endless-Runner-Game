@@ -40,8 +40,10 @@ class EpicGameJam extends Sprite {
 		e.set("View", View.get());
 		game.addEntity(e);
 		
-		var scene:Scene = new Scene(this);
-		game.addSystem(scene);
+		//var scene:Scene = new Scene(this);
+		//game.addSystem(scene);
+		game.movement.add(e);
+		game.scene.add(e);
 	}
 	
 	

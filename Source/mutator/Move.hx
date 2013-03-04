@@ -1,6 +1,7 @@
 package mutator;
 import model.Movement;
 import model.MoveNode;
+import model.Pos;
 
 /**
  * ...
@@ -9,11 +10,20 @@ import model.MoveNode;
 
 class Move implements ISystem
 {
-	var models:Array<MoveNode>;
+	//var models:Array<MoveNode>;
+	var posList:Array<Pos>;
+	var moveList:Array<Movement>;
 	
 	public function new() 
 	{
-		models = new Array<Move>();
+		//models = new Array<MoveNode>();
+		
+		moveList = new Array<Movement>();
+		posList = new Array<Pos>();
+	}
+	public function add(entity:Entity):Void {
+		posList.push(entity.get("pos"));
+		moveList.push(entity.get("movement"));
 	}
 	public function start():Void {
 		
@@ -22,8 +32,13 @@ class Move implements ISystem
 		
 	}
 	public function update(time:Float):Void {
-		for (model in models) {
-			model.pos.pt.offset(model.movement.vel.x, model.movement.vel.y);
+		var current:Int=0;
+		while (current < posList.length) {
+			var pos  = posList[current];
+			var movement = moveList[current];
+			pos.pt.x += movement.vel.x;
+			pos.pt.y += movement.vel.y;
+			current++;
 		}
 	}
 }

@@ -22,11 +22,11 @@ class Entity
 		lookup = new Hash<Dynamic>();
 		
 	}
-	public function set(n:String, t:Dynamic):Dynamic {
+	public inline function set(n:String, t:Dynamic):Dynamic {
 		lookup.set(n, t);
 		return t;
 	}
-	public function get(n:String):Dynamic {
+	public inline function get(n:String):Dynamic {
 		return lookup.get(n);
 	}
 	public function exists(n:String):Bool {

@@ -1,5 +1,8 @@
 package ;
+import model.View;
+import mutator.Scene;
 import nme.display.Sprite;
+import mutator.Move;
 
 /**
  * ...
@@ -9,12 +12,18 @@ import nme.display.Sprite;
 class Engine extends Sprite
 {
 	private var systems:Array<ISystem>;
+	public var scene:Scene;
+	public var movement:Move;
+	
 	private var entities:Array<Entity>;
 	
 	public function new() 
 	{
 		systems = new Array<ISystem>();
 		entities = new Array<Entity>();
+		
+		addSystem(scene = new Scene(this));
+		addSystem(movement = new Move());
 		
 		super();
 	}
