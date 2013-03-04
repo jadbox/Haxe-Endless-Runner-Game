@@ -41,8 +41,12 @@ class Assets {
 		
 		if (!initialized) {
 			
+			resourceClasses.set ("assets/megapony.png", NME_assets_megapony_png);
+			resourceTypes.set ("assets/megapony.png", "image");
 			resourceClasses.set ("assets/test.png", NME_assets_test_png);
 			resourceTypes.set ("assets/test.png", "image");
+			resourceClasses.set ("assets/megapony.png", NME_assets_megapony_png1);
+			resourceTypes.set ("assets/megapony.png", "image");
 			resourceClasses.set ("assets/nme.svg", NME_assets_nme_svg);
 			resourceTypes.set ("assets/nme.svg", "text");
 			

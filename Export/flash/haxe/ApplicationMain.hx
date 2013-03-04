@@ -97,9 +97,19 @@ class ApplicationMain {
 	public static function getAsset (inName:String):Dynamic {
 		
 		
+		if (inName=="assets/megapony.png")
+			 
+            return Assets.getBitmapData ("assets/megapony.png");
+         
+		
 		if (inName=="assets/test.png")
 			 
             return Assets.getBitmapData ("assets/test.png");
+         
+		
+		if (inName=="assets/megapony.png")
+			 
+            return Assets.getBitmapData ("assets/megapony.png");
          
 		
 		if (inName=="assets/nme.svg")
@@ -126,7 +136,9 @@ class ApplicationMain {
 	
 }
 
+class NME_assets_megapony_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_test_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+class NME_assets_megapony_png1 extends nme.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_nme_svg extends nme.utils.ByteArray { }
 
 

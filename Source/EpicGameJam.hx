@@ -19,7 +19,8 @@ import mutator.Scene;
  * @author Jonathan Dunlap
  */
 class EpicGameJam extends Sprite {
-	
+
+	public static var keyInput:KeyboardInput;
 	
 	public function new () {
 		
@@ -32,7 +33,7 @@ class EpicGameJam extends Sprite {
 		
 		Lib.current.stage.align = StageAlign.TOP_LEFT;
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
-		
+		keyInput = new KeyboardInput(Lib.current.stage);
 		
 		
 		var game:Engine = new Engine();
@@ -51,7 +52,11 @@ class EpicGameJam extends Sprite {
 		game.scene.add(e);
 		
 		var player:Entity = new Entity();
-		player.set([new Pos(), new Movement()]);
+		player.set([new Pos(), new Movement(), View.get("assets/megapony.png")]);
+		game.addEntity(player);
+		game.movement.add(player);
+		game.scene.add(player);
+		
 		
 		addEventListener(Event.ENTER_FRAME, function(e):Void {
 			game.update(1);
