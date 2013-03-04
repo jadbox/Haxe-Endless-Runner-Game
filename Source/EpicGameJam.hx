@@ -42,6 +42,7 @@ class EpicGameJam extends Sprite {
 		e.set(new Pos());
 		e.set(new Movement()); 
 		e.set(View.get());
+		trace("post set");
 		game.addEntity(e);
 		
 		//var scene:Scene = new Scene(this);
@@ -57,7 +58,7 @@ class EpicGameJam extends Sprite {
 	
 	// Entry point
 	public static function main () {
-		
+		trace("main");
 		Lib.current.addChild (new EpicGameJam ());
 		
 	}

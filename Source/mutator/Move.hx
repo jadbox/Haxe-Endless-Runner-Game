@@ -2,6 +2,7 @@ package mutator;
 import model.Movement;
 import model.MoveNode;
 import model.Pos;
+import nme.errors.Error;
 
 /**
  * ...
