@@ -11,9 +11,9 @@ class Movement
 	public var vel:Point;
 	public var maxSpeed:Float;
 	
-	public function new(maxSpeed:Float) 
+	public function new(maxSpeed:Float=1) 
 	{
-		vel = new Point();
+		vel = new Point(maxSpeed,maxSpeed);
 		this.maxSpeed = maxSpeed;
 	}
 	
