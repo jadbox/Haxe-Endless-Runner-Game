@@ -1,0 +1,17 @@
+-main ApplicationMain 
+-lib nme
+-lib actuate
+-cp Source
+-cp C:\Motion-Twin\haxe\lib\nme/3,5,5/
+-D nme_install_tool
+-D APP_PACKAGE
+-D html5
+-D web
+-js Export/html5/bin/EpicGameJam.js
+-cp Export/html5/haxe
+-D html5
+-D html
+--remap flash:nme
+--remap native:browser
+-debug
+--js-modern

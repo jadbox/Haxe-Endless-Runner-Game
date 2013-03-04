@@ -20,7 +20,7 @@ class Entity
 	public function new() 
 	{
 		lookup = new Hash<Dynamic>();
-		
+		trace("start");
 	}
 	public inline function set(t:Dynamic):Dynamic {
 		trace( Type.getClassName(t) );
