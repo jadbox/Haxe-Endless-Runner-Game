@@ -22,8 +22,12 @@ class Entity
 		lookup = new Hash<Dynamic>();
 	}
 	public function set(t:Dynamic):Dynamic {
-		trace( "class ", Type.getClassName(Type.getClass(t)) );
-		lookup.set( Type.getClassName( Type.getClass(t) ) , t);
+		if (Std.is(t, Array)) {
+			for (mod in cast(t, Array<Dynamic>)) lookup.set( Type.getClassName( Type.getClass(mod) ), mod);
+		}else {
+			trace( "class ", Type.getClassName(Type.getClass(t)) );
+			lookup.set( Type.getClassName( Type.getClass(t) ) , t);
+		}
 		return t;
 	}
 	public function fetch(t:Class<Dynamic>):Dynamic {

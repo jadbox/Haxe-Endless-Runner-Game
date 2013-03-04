@@ -50,6 +50,9 @@ class EpicGameJam extends Sprite {
 		game.movement.add(e);
 		game.scene.add(e);
 		
+		var player:Entity = new Entity();
+		player.set([new Pos(), new Movement()]);
+		
 		addEventListener(Event.ENTER_FRAME, function(e):Void {
 			game.update(1);
 		});
