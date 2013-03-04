@@ -15,6 +15,12 @@ class Move implements ISystem
 	{
 		models = new Array<Move>();
 	}
+	public function start():Void {
+		
+	}
+	public function stop():Void {
+		
+	}
 	public function update(time:Float):Void {
 		for (model in models) {
 			

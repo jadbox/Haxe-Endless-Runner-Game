@@ -1,6 +1,8 @@
 package ;
 
 
+import model.View;
+import model.Pos;
 import nme.Assets;
 import nme.display.Bitmap;
 import nme.display.Sprite;
@@ -27,11 +29,14 @@ class EpicGameJam extends Sprite {
 		Lib.current.stage.align = StageAlign.TOP_LEFT;
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		
-		var logo:Bitmap = new Bitmap (Assets.getBitmapData ("assets/test.png"));
-		addChild(logo);
+		
 		
 		var game:Engine = new Engine();
 		addChild(game);
+		
+		var e:Entity = new Entity();
+		e.set("Pos", new Pos());
+		e.set("View", View.get());
 	}
 	
 	
