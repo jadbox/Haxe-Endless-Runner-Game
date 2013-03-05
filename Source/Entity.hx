@@ -1,6 +1,7 @@
 package ;
 import model.Movement;
 import model.Pos;
+import model.View;
 import promhx.Promise;
 /**
  * ...
@@ -9,7 +10,6 @@ import promhx.Promise;
 
 class Entity
 {
-	private static var Models = [Movement, Pos];
 	var lookup:Hash<Dynamic>;
 	
 	public function new() 
@@ -20,7 +20,7 @@ class Entity
 		if (Std.is(t, Array)) {
 			for (mod in cast(t, Array<Dynamic>)) lookup.set( Type.getClassName( Type.getClass(mod) ), mod);
 		}else {
-			trace( "class ", Type.getClassName(Type.getClass(t)) );
+			//trace( "class ", Type.getClassName(Type.getClass(t)) );
 			lookup.set( Type.getClassName( Type.getClass(t) ) , t);
 		}
 		return t;
@@ -32,12 +32,15 @@ class Entity
 		return lookup.exists(n);
 	}
 	
+	//==== STATIC
+	private static var Models = [Movement, Pos, View];
 	public static function make(systems:String):Entity {
 		var a = systems.split("+");
 		var e = new Entity();
 		for (i in a) {
+			i = "model." + i;
 			for (M in Models) {
-				if (i == Type.getClassName(M)) e.set(Type.createInstance(M, null));
+				if (i == Type.getClassName(M)) e.set(Type.createInstance(M, []));
 			}
 		}
 		return e;

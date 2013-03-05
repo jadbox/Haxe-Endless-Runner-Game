@@ -38,12 +38,9 @@ class EpicGameJam extends Sprite {
 		
 		var game:Engine = new Engine();
 		addChild(game);
-		trace("started");
-		var e:Entity = new Entity();
-		e.set(new Pos());
-		e.set(new Movement()); 
+		var e:Entity = Entity.make("Pos+Movement");
 		e.set(View.get());
-		trace("post set");
+		//trace("post set");
 		game.addEntity(e);
 		
 		//var scene:Scene = new Scene(this);
