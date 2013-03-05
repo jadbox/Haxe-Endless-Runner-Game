@@ -9,16 +9,13 @@ import nme.errors.Error;
  * @author Jonathan Dunlap
  */
 
-class Move implements ISystem
+class Physics implements ISystem
 {
-	//var models:Array<MoveNode>;
 	var posList:Array<Pos>;
 	var moveList:Array<Movement>;
 	
 	public function new() 
-	{
-		//models = new Array<MoveNode>();
-		
+	{	
 		moveList = new Array<Movement>();
 		posList = new Array<Pos>();
 	}
@@ -37,8 +34,8 @@ class Move implements ISystem
 		while (current < posList.length) {
 			var pos  = posList[current];
 			var movement = moveList[current];
-			pos.x += movement.x;
-			pos.y += movement.y;
+			
+			pos.pt.y -= movement.vel.y;
 			current++;
 		}
 	}

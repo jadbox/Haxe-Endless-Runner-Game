@@ -8,12 +8,13 @@ import nme.geom.Point;
 
 class Movement 
 {
-	public var vel:Point;
+	public var x:Int;
+	public var y:Int;
 	public var maxSpeed:Float;
 	
 	public function new(maxSpeed:Float=1) 
 	{
-		vel = new Point(maxSpeed,maxSpeed);
+		x = y = 1; // change to 0
 		this.maxSpeed = maxSpeed;
 	}
 	

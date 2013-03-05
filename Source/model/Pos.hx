@@ -8,12 +8,13 @@ import nme.geom.Point;
 
 class Pos 
 {
-	public var pt:Point;
+	public var x:Int;
+	public var y:Int;
 	public var rotation:Float;
 	
 	public function new() 
 	{
-		pt = new Point();
+		x = y = 0;
 		rotation = 0;
 	}
 	

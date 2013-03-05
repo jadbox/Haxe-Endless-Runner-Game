@@ -11,6 +11,7 @@ import promhx.Promise;
 class Entity
 {
 	var lookup:Hash<Dynamic>;
+	public var id:UInt;
 	
 	public function new() 
 	{

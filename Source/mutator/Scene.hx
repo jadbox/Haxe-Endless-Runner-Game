@@ -29,8 +29,8 @@ class Scene implements ISystem
 		while (current < posList.length) {
 			var pos  = posList[current];
 			var view = viewList[current];
-			view.x = pos.pt.x;
-			view.y = pos.pt.y;
+			view.x = pos.x;
+			view.y = pos.y;
 			current++;
 		}
 	}
