@@ -6,15 +6,10 @@ import promhx.Promise;
  * ...
  * @author Jonathan Dunlap
  */
-enum Kinds {
-		position;
-		movement;
-}
+
 class Entity
 {
 	private static var Models = [Movement, Pos];
-	
-	static var Kind_Count = 2;
 	var lookup:Hash<Dynamic>;
 	
 	public function new() 
