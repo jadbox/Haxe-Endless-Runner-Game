@@ -38,6 +38,13 @@ class Entity
 	}
 	
 	public static function make(systems:String):Entity {
-		return new Entity();
+		var a = systems.split("+");
+		var e = new Entity();
+		for (i in a) {
+			for (M in Models) {
+				if (i == Type.getClassName(M)) e.set(Type.createInstance(M, null));
+			}
+		}
+		return e;
 	}
 }
