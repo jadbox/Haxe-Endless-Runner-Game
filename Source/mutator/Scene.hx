@@ -34,19 +34,14 @@ class Scene implements ISystem
 			current++;
 		}
 	}
-	public function start():Void {
-		
-	}
-	public function stop():Void {
-		
-	}
-	
 	public function add(e:Entity):Void {
 		//nodes.push(node);
 		viewList.push( e.fetch(View) );
 		posList.push ( e.fetch(Pos) );
 		root.addChild(e.fetch(View));
 	}
-	
+	public function remove(e:Entity):Void {
+		
+	}
 	
 }

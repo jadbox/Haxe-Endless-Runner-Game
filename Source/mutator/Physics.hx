@@ -27,12 +27,6 @@ class Physics implements ISystem
 		moveList.push(entity.fetch(Movement));
 		phyList.push(entity.fetch(PhysicsBody));
 	}
-	public function start():Void {
-		
-	}
-	public function stop():Void {
-		
-	}
 	public function update(time:Float):Void {
 		var current:Int=0;
 		while (current < posList.length) {
