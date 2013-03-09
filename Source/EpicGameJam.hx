@@ -1,6 +1,7 @@
 package ;
 
 
+import model.Collider;
 import model.Movement;
 import model.View;
 import model.Pos;
@@ -49,10 +50,23 @@ class EpicGameJam extends Sprite {
 		game.scene.add(e);
 		
 		var player:Entity = new Entity();
-		player.set([new Pos(), new Movement(), View.get("assets/megapony.png")]);
+		player.set([new Pos(), new Movement(25), View.get("assets/megapony.png"), new Collider("player")]);
+		var v:View = player.fetch(View);
+		v.scaleX = v.scaleY = .2;
 		game.addEntity(player);
-		game.movement.add(player);
+		game.playerMovement.add(player);
 		game.scene.add(player);
+		game.collision.add(player);
+		
+		var ground:Entity = new Entity();
+		var groundView:View = new View();
+		groundView.graphics.beginFill(0xff0000, 1);
+		groundView.graphics.drawRect(0, 0, Lib.current.stage.stageWidth, 10);
+		var groundPos:Pos = new Pos();
+		groundPos.pt.y = Lib.current.stage.stageHeight - 10;
+		ground.set([groundPos, groundView, new Collider("ground")]);
+		game.scene.add(ground);
+		game.collision.add(ground);
 		
 		
 		addEventListener(Event.ENTER_FRAME, function(e):Void {

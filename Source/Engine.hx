@@ -1,5 +1,7 @@
 package ;
 import model.View;
+import mutator.Collision;
+import mutator.PlayerMove;
 import mutator.Scene;
 import nme.display.Sprite;
 import mutator.Move;
@@ -14,6 +16,8 @@ class Engine extends Sprite
 	private var systems:Array<ISystem>;
 	public var scene:Scene;
 	public var movement:Move;
+	public var playerMovement:PlayerMove;
+	public var collision:Collision;
 	
 	private var entities:Array<Entity>;
 	
@@ -24,6 +28,8 @@ class Engine extends Sprite
 		
 		addSystem(scene = new Scene(this));
 		addSystem(movement = new Move());
+		addSystem(playerMovement = new PlayerMove());
+		addSystem(collision = new Collision());
 		
 		super();
 	}
