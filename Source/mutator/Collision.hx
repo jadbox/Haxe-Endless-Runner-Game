@@ -42,7 +42,7 @@ class Collision implements ISystem
 			collider.colliders = [];
 			var curCol:Int = 0;
 			while (curCol < viewList.length) {
-				if (v.hitTestObject(view))
+				if (viewList[curCol].hitTestObject(view))
 					collider.colliders.push(colList[curCol].kind);
 				curCol++;
 			}
@@ -50,5 +50,12 @@ class Collision implements ISystem
 			//pos.pt.y += movement.vel.y;
 			current++;
 		}
+	}
+	
+	/* INTERFACE ISystem */
+	
+	public function remove(e:Entity):Void 
+	{
+		
 	}
 }

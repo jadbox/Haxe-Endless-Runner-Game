@@ -63,7 +63,7 @@ class EpicGameJam extends Sprite {
 		groundView.graphics.beginFill(0xff0000, 1);
 		groundView.graphics.drawRect(0, 0, Lib.current.stage.stageWidth, 10);
 		var groundPos:Pos = new Pos();
-		groundPos.pt.y = Lib.current.stage.stageHeight - 10;
+		groundPos.y = Lib.current.stage.stageHeight - 10;
 		ground.set([groundPos, groundView, new Collider("ground")]);
 		game.scene.add(ground);
 		game.collision.add(ground);

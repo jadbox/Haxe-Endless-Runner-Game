@@ -41,25 +41,26 @@ class PlayerMove implements ISystem
 		{
 			var pos = posList[current];
 			var movement = moveList[current];
+			var collider = colList[current];
 			if (EpicGameJam.keyInput.getKeyDown(Keyboard.A))
 			{
-				movement.vel.x -= 5;
-				if (movement.vel.x < -maxVel) movement.vel.x = -maxVel;
+				movement.x -= 5;
+				if (movement.x < -maxVel) movement.x = -maxVel;
 			}
 			else if (EpicGameJam.keyInput.getKeyDown(Keyboard.D))
 			{
-				movement.vel.x += 5;
-				if (movement.vel.x > maxVel) movement.vel.x = maxVel;
+				movement.x += 5;
+				if (movement.x > maxVel) movement.x = maxVel;
 			}
 			else
 			{
-				if (movement.vel.x > 0) {
-					movement.vel.x -= 5;
-					if (movement.vel.x < 0) movement.vel.x = 0;
+				if (movement.x > 0) {
+					movement.x -= 5;
+					if (movement.x < 0) movement.x = 0;
 				}
-				if (movement.vel.x < 0) {
-					movement.vel.x += 5;
-					if (movement.vel.x > 0) movement.vel.x = 0;
+				if (movement.x < 0) {
+					movement.x += 5;
+					if (movement.x > 0) movement.x = 0;
 				}
 			}
 			var jumping:Bool;
@@ -68,16 +69,16 @@ class PlayerMove implements ISystem
 				jumping = true;
 			else
 				jumping = false;
-			if (pos.pt.y + 170 >= Lib.current.stage.stageHeight)
+			if (collider.colliders.length > 0)
 				colliding = true;
 			else
 				colliding = false;
 				
 			if (jumping && colliding)
-				movement.vel.y -= 100;
+				movement.y -= 100;
 			
 			if (!colliding) {
-				movement.vel.y += 10;
+				movement.y += 10;
 			}
 			/*if (movement.vel.y < 0 && !colliding) {
 				movement.vel.y += 20;
@@ -89,16 +90,23 @@ class PlayerMove implements ISystem
 				if (movement.vel.y < 0) movement.vel.y = 0;
 			}*/
 			
-			pos.pt.x += movement.vel.x;
-			pos.pt.y += movement.vel.y;
+			pos.x += movement.x;
+			pos.y += movement.y;
 			
-			if (pos.pt.y + 170 > Lib.current.stage.stageHeight)
-				pos.pt.y = Lib.current.stage.stageHeight - 170;
+			if (pos.y + 170 > Lib.current.stage.stageHeight)
+				pos.y = Lib.current.stage.stageHeight - 170;
 		}
 		
 		while (current < posList.length) {
 			movement();
 			current++;
 		}
+	}
+	
+	/* INTERFACE ISystem */
+	
+	public function remove(e:Entity):Void 
+	{
+		
 	}
 }
