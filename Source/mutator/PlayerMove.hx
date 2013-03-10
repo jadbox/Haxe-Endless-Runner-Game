@@ -75,10 +75,12 @@ class PlayerMove implements ISystem
 				colliding = false;
 				
 			if (jumping && colliding)
-				movement.y -= 100;
+				movement.y -= 20;
 			
 			if (!colliding) {
 				movement.y += 10;
+			}else if(movement.y > 0){
+				movement.y = 0;
 			}
 			/*if (movement.vel.y < 0 && !colliding) {
 				movement.vel.y += 20;
@@ -93,8 +95,15 @@ class PlayerMove implements ISystem
 			pos.x += movement.x;
 			pos.y += movement.y;
 			
-			if (pos.y + 170 > Lib.current.stage.stageHeight)
-				pos.y = Lib.current.stage.stageHeight - 170;
+			if (colliding && !jumping) {
+				for (hit in collider.colliders) {
+					if (hit.col.kind == "ground") {
+						trace("hit: " + hit.col.kind + " " + hit.pos.y);
+						pos.y = hit.pos.y - 170;
+					}
+				}
+				//pos.y = Lib.current.stage.stageHeight - 170;
+			}
 		}
 		
 		while (current < posList.length) {

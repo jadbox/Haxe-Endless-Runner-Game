@@ -50,9 +50,11 @@ class EpicGameJam extends Sprite {
 		game.scene.add(e);
 		
 		var player:Entity = new Entity();
-		player.set([new Pos(), new Movement(25), View.get("assets/megapony.png"), new Collider("player")]);
-		var v:View = player.fetch(View);
+		//set player as the unique case for scene
+		player.id = 1;
+		var v:View = View.get("assets/megapony.png");
 		v.scaleX = v.scaleY = .2;
+		player.set([new Pos(), new Movement(25), v, new Collider("player", v.width, v.height)]);
 		game.addEntity(player);
 		game.playerMovement.add(player);
 		game.scene.add(player);
@@ -64,7 +66,7 @@ class EpicGameJam extends Sprite {
 		groundView.graphics.drawRect(0, 0, Lib.current.stage.stageWidth, 10);
 		var groundPos:Pos = new Pos();
 		groundPos.y = Lib.current.stage.stageHeight - 10;
-		ground.set([groundPos, groundView, new Collider("ground")]);
+		ground.set([groundPos, groundView, new Collider("ground", groundView.width, groundView.height)]);
 		game.scene.add(ground);
 		game.collision.add(ground);
 		

@@ -14,7 +14,7 @@ class Movement
 	
 	public function new(maxSpeed:Float=1) 
 	{
-		x = y = 1; // change to 0
+		x = y = 0; // change to 0
 		this.maxSpeed = maxSpeed;
 	}
 	

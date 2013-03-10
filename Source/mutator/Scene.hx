@@ -41,11 +41,13 @@ class Scene implements ISystem
 				scenePos.x += camPos.x - camCenter;
 				camPos.x = camCenter;
 			}
+			camView.x = camPos.x;
+			camView.y = camPos.y;
 		}
 		while (current < posList.length) {
 			var pos  = posList[current];
 			var view = viewList[current];
-			view.x = pos.x;
+			view.x = pos.x - scenePos.x;
 			view.y = pos.y;
 			current++;
 		}
@@ -53,7 +55,8 @@ class Scene implements ISystem
 	public function add(e:Entity):Void {
 		//nodes.push(node);
 		if (e.id == 1) {
-			
+			camPos = e.fetch(Pos);
+			camView = e.fetch(View);
 		}else {
 			viewList.push( e.fetch(View) );
 			posList.push ( e.fetch(Pos) );
