@@ -12,6 +12,8 @@
 	<haxelib name="nme" />
 	<haxelib name="actuate" />
 	
+	<haxedef name="fdb" if="target_flash" />
+	
 	<assets path="Assets" rename="assets" include="*" exclude="nme.svg" />
 	<assets path="Assets" rename="assets" include="*" exclude="test.png" />
 	
