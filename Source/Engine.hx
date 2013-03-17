@@ -1,4 +1,5 @@
 package ;
+import model.Pos;
 import model.View;
 import mutator.Collision;
 import mutator.PlayerMove;
@@ -10,6 +11,7 @@ import nme.display.MovieClip;
 import nme.display.Graphics;
 import maths.Vector2;
 import level.TileTypes;
+import system.VectorPool;
 
 /**
  * ...
@@ -25,6 +27,8 @@ class Engine extends Sprite
 	public var collision:Collision;
 	
 	public var map:Map;
+	
+	public var player:Entity;
 	
 	private var entities:Array<Entity>;
 	
@@ -42,6 +46,7 @@ class Engine extends Sprite
 		
 		map = new Map(this);
 		CreateTilesInner(map.m_map);
+		var testpool:VectorPool = new VectorPool(10);
 		
 	}
 	
@@ -81,6 +86,14 @@ class Engine extends Sprite
 				//
 				case TileTypes.kPlayer:
 				{
+					addEntity(player = new Entity());
+					var playerPos:Pos = new Pos();
+					var playerView:View = new View();
+					playerView.graphics.beginFill(0x000000);
+					playerView.graphics.drawRect(0,0,Constants.kTileSize,Constants.kTileSize);
+					player.set([playerPos, playerView]);
+					tile = new MovieClip();
+					tile.addChild(playerView);
 					//tile = m_player = Player(SpawnMo( PlayerFla, tilePos ));
 					//tilePos = m_player.m_Pos;
 				}
