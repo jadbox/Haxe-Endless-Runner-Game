@@ -14,6 +14,7 @@ import nme.display.StageScaleMode;
 import nme.events.Event;
 import nme.Lib;
 import mutator.Scene;
+import system.VectorPool;
 
 
 /**
@@ -22,6 +23,9 @@ import mutator.Scene;
 class EpicGameJam extends Sprite {
 
 	public static var keyInput:KeyboardInput;
+	
+	// fast allocator for vector2s, cleared once per frame
+	static public var m_gTempVectorPool:VectorPool
 	
 	public function new () {
 		
