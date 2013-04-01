@@ -21,7 +21,7 @@ class Map
 	public static var m_Height:Int = 15;
 		
 	// map for the level
-	public var m_map(default,null):Array<UInt>;
+	public var m_map(default,null):Array<Int>;
 	
 
 	public function new(platformer:Engine) 
@@ -53,7 +53,7 @@ class Map
 		
 	}
 	
-	public function GetTile( i:Int, j:Int ):UInt
+	public function GetTile( i:Int, j:Int ):Int
 	{
 		//Assert( i>=0&&i<=m_Width && j>=0 && j<=m_Height, "Map.GetTile(): index out of range" );
 		//return m_Map[j*m_Width+i];
@@ -63,7 +63,7 @@ class Map
 	/// <summary>
 	/// 
 	/// </summary>
-	public function GetTileSafe( map:Array<UInt>, i:Int, j:Int ):UInt
+	public function GetTileSafe( map:Array<Int>, i:Int, j:Int ):Int
 	{
 		if ( i>=0&&i<m_Width&&j>=0&&j<m_Height )
 		{
@@ -110,7 +110,7 @@ class Map
 	/// <summary>
 	/// Get the tile of a world coordinate in Vector2
 	/// </summary>
-	public function GetTileFromPos( pos:Vector2 ):UInt
+	public function GetTileFromPos( pos:Vector2 ):Int
 	{
 		var i:Int = WorldCoordsToTileX( pos.m_x );
 		var j:Int = WorldCoordsToTileY( pos.m_y );
@@ -123,7 +123,7 @@ class Map
 	/// </summary>
 	static public function IsTileObstacle( tile:Int ):Bool
 	{
-		return cast(tile, UInt) == TileTypes.kPlatform;
+		return cast(tile, Int) == TileTypes.kPlatform;
 	}
 	
 	/// <summary>

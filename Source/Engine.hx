@@ -18,7 +18,7 @@ import system.VectorPool;
  * @author Jonathan Dunlap
  */
 
-class Engine extends Sprite
+class Engine extends MovieClip
 {
 	private var systems:Array<ISystem>;
 	public var scene:Scene;
@@ -31,6 +31,9 @@ class Engine extends Sprite
 	public var player:Entity;
 	
 	private var entities:Array<Entity>;
+	
+	private var m_player:MoveableObject;
+	private var m_camera:Camera;
 	
 	public function new() 
 	{
@@ -48,9 +51,11 @@ class Engine extends Sprite
 		CreateTilesInner(map.m_map);
 		var testpool:VectorPool = new VectorPool(10);
 		
+		m_camera = new Camera(this, m_player);
+		
 	}
 	
-	private function CreateTilesInner( tileSet:Array<UInt>, addtoScene:Bool=true ):Void
+	private function CreateTilesInner( tileSet:Array<Int>, addtoScene:Bool=true ):Void
 	{
 		var index:Int = 0;
 		for ( tileCode in tileSet )
@@ -89,13 +94,18 @@ class Engine extends Sprite
 					addEntity(player = new Entity());
 					var playerPos:Pos = new Pos();
 					var playerView:View = new View();
-					playerView.graphics.beginFill(0x000000);
+					playerView.graphics.beginFill(0x00ff00);
 					playerView.graphics.drawRect(0,0,Constants.kTileSize,Constants.kTileSize);
-					player.set([playerPos, playerView]);
-					tile = new MovieClip();
-					tile.addChild(playerView);
-					//tile = m_player = Player(SpawnMo( PlayerFla, tilePos ));
+					//player.set([playerPos, playerView]);
+					//tile = new MovieClip();
+					//tile.addChild(playerView);
+					tile = m_player = new Player();
+					m_player.Initialise(tilePos, map, EpicGameJam.gameJam);
+					m_player.addChild(playerView);
+					playerView.x -= Constants.kTileSize / 2;
+					playerView.y -= Constants.kTileSize / 2;
 					//tilePos = m_player.m_Pos;
+					
 				}
 				default: Util.Assert( false, "Unexpected tile code " + tileCode );
 			}
@@ -128,5 +138,7 @@ class Engine extends Sprite
 	}*/
 	public function update(time:Float):Void {
 		for (s in systems) s.update(time);
+		m_player.Update(time);
+		m_camera.Update(time);
 	}
 }

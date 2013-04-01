@@ -13,9 +13,11 @@ class KeyboardInput
 {
 	var gameWorld:Stage;
 	var keyStates:IntHash<Bool>;
+	var lastKeyDown:Int;
 
 	public function new(worldDisplay:Stage) 
 	{
+		lastKeyDown = -1;
 		gameWorld = worldDisplay;
 		keyStates = new IntHash<Bool>();
 		gameWorld.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
@@ -36,6 +38,14 @@ class KeyboardInput
 	public function getKeyDown(keyCode:Int):Bool
 	{
 		if (keyStates.exists(keyCode) && keyStates.get(keyCode) == true) return true;
+		return false;
+	}
+	/*
+	 * key is transitioning from up to down
+	 */
+	public function getKeyDownTransition(keyCode:Int):Bool
+	{
+		if (keyStates.exists(keyCode) && keyStates.get(keyCode) == true && lastKeyDown != keyCode) return true;
 		return false;
 	}
 	

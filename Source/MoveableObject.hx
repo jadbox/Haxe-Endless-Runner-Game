@@ -4,30 +4,35 @@ import nme.display.MovieClip;
 import maths.Vector2;
 import level.Map;
 import geom.IAABB;
+import geom.AABB;
+import geom.ICircle;
+import geom.Contact;
+import geom.Collide;
+import EpicGameJam;
 
 
-public class MoveableObject extends MovieClip implements IAABB, ICircle
+class MoveableObject extends MovieClip, implements IAABB, implements ICircle
 {
 	// friction with ground - 1=totally sticky, 0=ice
-	private const kGroundFriction:Float = 0.6;
+	private static var kGroundFriction:Float = 0.6;
 	
-	protected var m_pos:Vector2;
-	protected var m_posCorrect:Vector2;
-	protected var m_vel:Vector2;
-	protected var m_radius:Float;
-	protected var m_halfExtents:Vector2;
+	var m_pos:Vector2;
+	var m_posCorrect:Vector2;
+	var m_vel:Vector2;
+	var m_radius:Float;
+	var m_halfExtents:Vector2;
 	
-	protected var m_platformer:EpicGameJam;
-	protected var m_map:Map;
+	var m_platformer:EpicGameJam;
+	var m_map:Map;
 	
-	protected var m_contact:Contact;
+	var m_contact:Contact;
 	
 	private var m_onGround:Bool;
 	private var m_onGroundLast:Bool;
 	
-	protected var m_dead:Bool;
+	var m_dead:Bool;
 	
-	public function MoveableObject( )
+	public function new( )
 	{
 		super( );
 		
@@ -55,7 +60,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 			pos.m_y += Constants.kTileSize-m_radius;
 		}
 		
-		m_Pos = pos;
+		m_pos = pos;
 		m_platformer = parent;
 		m_map = map;
 		
@@ -65,8 +70,8 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>	
-	public var m_Radius(getRad,null):Float
-	function getRad()
+	private var m_Radius:Float;
+	public function getRad()
 	{
 		return m_radius;
 	}
@@ -74,8 +79,8 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>
-	public var m_Centre(getCentre,null ):Vector2
-	function getCentre()
+	private var m_Centre:Vector2;
+	public function getCentre()
 	{
 		return m_pos;
 	}
@@ -83,8 +88,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>
-	public var m_HalfExtents(getHalfExt, null ):Vector2
-	function getHalfExt()
+	public function getHalfExtents()
 	{
 		return m_halfExtents;
 	}
@@ -92,8 +96,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>	
-	public var m_Pos(getPos,setPos):Vector2
-	function getPos()
+	public function getPos()
 	{
 		return m_pos;
 	}
@@ -101,7 +104,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>	
-	function setPos( pos:Vector2 ):void
+	public function setPos( pos:Vector2 ):Void
 	{
 		m_pos = pos;
 		
@@ -114,8 +117,8 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>	
-	public var m_Vel(getVel,setVel ):Vector2
-	function getVel()
+	private var m_Vel:Vector2;
+	public function getVel()
 	{
 		return m_vel;
 	}
@@ -123,7 +126,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>	
-	function setVel( vel:Vector2 ):void
+	public function setVel( vel:Vector2 ):Void
 	{
 		m_vel = vel;
 	}
@@ -131,7 +134,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>
-	public var m_OnGround(getOnGround,null ):Bool
+	public var m_OnGround(getOnGround, null ):Bool;
 	function getOnGround()
 	{
 		return m_onGround;
@@ -140,7 +143,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>
-	public var m_OnGroundLast(getOnGroundLast,null ):Bool
+	public var m_OnGroundLast(getOnGroundLast, null ):Bool;
 	function getOnGroundLast()
 	{
 		return m_onGroundLast;
@@ -149,7 +152,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>
-	public var m_TileMapped(getTileMapped,null ):Bool
+	public var m_TileMapped(getTileMapped, null ):Bool;
 	function getTileMapped()
 	{
 		return true;
@@ -158,24 +161,12 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>	
-	public var m_Dead(getDead,setDead ):Bool
-	function getDead()
-	{
-		return m_dead;
-	}
-	
-	/// <summary>
-	/// 
-	/// </summary>	
-	function setDead( dead:Bool ):void
-	{
-		m_dead = dead;
-	}
+	public var m_Dead:Bool;
 	
 	/// <summary>
 	/// Apply gravity, do collision and integrate position
 	/// </summary>	
-	public function Update( dt:Float ):void
+	public function Update( dt:Float ):Void
 	{
 		if ( m_ApplyGravity )
 		{
@@ -195,14 +186,14 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 		m_pos.MulAddScalarTo( m_vel.Add(m_posCorrect), dt );
 		
 		// force the setter to act
-		m_Pos = m_pos;
+		setPos(m_pos);
 		m_posCorrect.Clear( );
 	}
 	
 	/// <summary>
 	/// 
 	/// </summary>
-	public var m_HasWorldCollision(getHasWorldCollision,null ):Bool
+	public var m_HasWorldCollision(getHasWorldCollision, null ):Bool;
 	function getHasWorldCollision()
 	{
 		return false;
@@ -211,7 +202,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>
-	var m_ApplyGravity(getApplyGravity, null ):Bool
+	var m_ApplyGravity(getApplyGravity, null ):Bool;
 	function getApplyGravity()
 	{
 		return false;
@@ -220,7 +211,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>
-	var m_ApplyFriction(getApplyFriction,null ):Bool
+	var m_ApplyFriction(getApplyFriction, null ):Bool;
 	function getApplyFriction()
 	{
 		return false;
@@ -229,7 +220,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>
-	public var m_ForceUpdate( getForceUpdate,null):Bool
+	public var m_ForceUpdate( getForceUpdate, null):Bool;
 	function getForceUpdate()
 	{
 		return false;
@@ -238,7 +229,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>
-	function PreCollisionCode( ):void
+	function PreCollisionCode( ):Void
 	{
 		m_onGroundLast = m_onGround;
 		m_onGround = false;
@@ -247,17 +238,17 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>
-	function PostCollisionCode( ):void
+	function PostCollisionCode( ):Void
 	{
 	}
 	
 	/// <summary>
 	/// Do collision detection and response for this object
 	/// </summary>	
-	function Collision( dt:Float ):void
+	function Collision( dt:Float ):Void
 	{
 		// where are we predicted to be next frame?
-		var predictedPos:Vector2 = Platformer.m_gTempVectorPool.AllocateClone( m_pos ).MulAddScalarTo( m_vel, dt );
+		var predictedPos:Vector2 = EpicGameJam.m_gTempVectorPool.AllocateClone( m_pos ).MulAddScalarTo( m_vel, dt );
 		
 		// find min/max
 		var min:Vector2 = m_pos.Min( predictedPos );
@@ -282,7 +273,7 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// Inner collision response code
 	/// </summary>	
-	function InnerCollide(tileAabb:AABB, tileType:Int, dt:Float, i:Int, j:Int ):void
+	function InnerCollide(tileAabb:AABB, tileType:Int, dt:Float, i:Int, j:Int ):Void
 	{
 		// is it collidable?
 		if ( Map.IsTileObstacle( tileType ) )
@@ -299,14 +290,14 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// <summary>
 	/// 
 	/// </summary>	
-	function LandingTransition( ):void
+	function LandingTransition( ):Void
 	{
 	}
 	
 	/// <summary>
 	/// Collision Reponse - remove normal velocity
 	/// </summary>	
-	function CollisionResponse( normal:Vector2, dist:Float, dt:Float ):void
+	function CollisionResponse( normal:Vector2, dist:Float, dt:Float ):Void
 	{
 		// get the separation and penetration separately, this is to stop pentration 
 		// from causing the objects to ping apart
@@ -357,8 +348,8 @@ public class MoveableObject extends MovieClip implements IAABB, ICircle
 	/// </summary>
 	static public function HeadingTowards( towardsPoint:Vector2, candidate:MoveableObject ):Bool
 	{
-		var deltaX:Float = towardsPoint.m_x-candidate.m_Pos.m_x;
-		var headingTowards:Bool = deltaX*candidate.m_Vel.m_x>0;
+		var deltaX:Float = towardsPoint.m_x-candidate.getPos().m_x;
+		var headingTowards:Bool = deltaX*candidate.getVel().m_x>0;
 		
 		return headingTowards;
 	}

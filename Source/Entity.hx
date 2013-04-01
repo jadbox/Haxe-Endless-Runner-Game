@@ -11,8 +11,8 @@ import promhx.Promise;
 class Entity
 {
 	var lookup:Hash<Dynamic>;
-	var types:UInt;
-	public var id:UInt;
+	var types:Int;
+	public var id:Int;
 	
 	public function new() 
 	{
@@ -43,14 +43,14 @@ class Entity
 		return lookup.get(Type.getClassName(t));
 	}
 	
-	public function exists(n:UInt):Bool {
+	public function exists(n:Int):Bool {
 		return types & n != 0; //lookup.exists(n);
 	}
 	
 	//==== STATIC
-	public static var VIEW:UInt = 1 << 0;
-	public static var POS:UInt = 1 << 1;
-	public static var MOVEMENT:UInt = 1 << 2;
+	public static var VIEW:Int = 1 << 0;
+	public static var POS:Int = 1 << 1;
+	public static var MOVEMENT:Int = 1 << 2;
 	
 	private static var Models = [Movement, Pos, View];
 	private static var ModelMasks = [MOVEMENT, POS, VIEW];

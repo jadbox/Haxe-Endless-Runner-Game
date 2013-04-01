@@ -5,7 +5,7 @@ import nme.utils.Endian;
 
 class Scalar
 {
-	static public var kMaxRandValue:UInt = 65535;
+	static public var kMaxRandValue:Int = 65535;
 	
 	/// <summary>
 	/// Return only the fractional component of n - always positive
@@ -71,18 +71,11 @@ class Scalar
 	/// <summary>
 	/// 
 	/// </summary>	
-	static public function RandUint( ):Int
+	static public function RandInt( ):Int
 	{
 		return Std.int(Math.abs((Math.random( )*kMaxRandValue)));
 	}
 	
-	/// <summary>
-	/// 
-	/// </summary>	
-	static public function RandInt( ):Int
-	{
-		return Std.int(Math.random( )*kMaxRandValue);
-	}
 	
 	/// <summary>
 	/// 
@@ -95,7 +88,7 @@ class Scalar
 	/// <summary>
 	/// 0xrrggbb
 	/// </summary>	
-	static public function MakeColour(r:UInt,g:UInt,b:UInt):UInt
+	static public function MakeColour(r:Int,g:Int,b:Int):Int
 	{
 		return r|( g<<8 )|( b<<16 );
 	}
@@ -103,7 +96,7 @@ class Scalar
 	/// <summary>
 	/// 
 	/// </summary>	
-	static public function RedFromColour( c:UInt ):UInt
+	static public function RedFromColour( c:Int ):Int
 	{
 		return c&0xff;
 	}
@@ -111,7 +104,7 @@ class Scalar
 	/// <summary>
 	/// 
 	/// </summary>	
-	static public function GreenFromColour( c:UInt ):UInt
+	static public function GreenFromColour( c:Int ):Int
 	{
 		return (c>>8)&0xff;
 	}
@@ -119,7 +112,7 @@ class Scalar
 	/// <summary>
 	/// 
 	/// </summary>	
-	static public function BlueFromColour( c:UInt ):UInt
+	static public function BlueFromColour( c:Int ):Int
 	{
 		return (c>>16)&0xff;
 	}
@@ -135,7 +128,7 @@ class Scalar
 	/// <summary>
 	/// 
 	/// </summary>	
-	static public function ColorTransformFromBGR( bgr:UInt ):ColorTransform
+	static public function ColorTransformFromBGR( bgr:Int ):ColorTransform
 	{
 		return new ColorTransform( Scalar.BlueFromColour( bgr )/255.0, Scalar.GreenFromColour( bgr )/255.0, Scalar.RedFromColour( bgr )/255.0 );
 	}
@@ -143,7 +136,7 @@ class Scalar
 	/// <summary>
 	/// 
 	/// </summary>	
-	static public function ColorTransformFromRGB( rgb:UInt ):ColorTransform
+	static public function ColorTransformFromRGB( rgb:Int ):ColorTransform
 	{
 		return new ColorTransform( Scalar.RedFromColour( rgb )/255.0, Scalar.GreenFromColour( rgb )/255.0, Scalar.BlueFromColour( rgb )/255.0 );
 	}

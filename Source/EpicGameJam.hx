@@ -25,7 +25,9 @@ class EpicGameJam extends Sprite {
 	public static var keyInput:KeyboardInput;
 	
 	// fast allocator for vector2s, cleared once per frame
-	static public var m_gTempVectorPool:VectorPool
+	static public var m_gTempVectorPool:VectorPool;
+	
+	static public var gameJam:EpicGameJam;
 	
 	public function new () {
 		
@@ -36,13 +38,17 @@ class EpicGameJam extends Sprite {
 	
 	private function initialize ():Void {
 		
+		gameJam = this;
 		Lib.current.stage.align = StageAlign.TOP_LEFT;
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		keyInput = new KeyboardInput(Lib.current.stage);
 		
+		m_gTempVectorPool = new VectorPool(10000);
 		
 		var game:Engine = new Engine();
 		addChild(game);
+		
+		var mo:MoveableObject = new MoveableObject();
 		/*var e:Entity = Entity.make("Pos+Movement");
 		e.set(View.get());
 		//trace("post set");
@@ -76,7 +82,7 @@ class EpicGameJam extends Sprite {
 		
 		
 		addEventListener(Event.ENTER_FRAME, function(e):Void {
-			game.update(1);
+			game.update(1/30);
 		});
 	}
 	
