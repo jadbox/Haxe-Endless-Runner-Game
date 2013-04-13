@@ -11,7 +11,7 @@ import nme.display.MovieClip;
 import nme.display.Graphics;
 import maths.Vector2;
 import level.TileTypes;
-import system.VectorPool;
+import pools.VectorPool;
 
 /**
  * ...
@@ -95,15 +95,15 @@ class Engine extends MovieClip
 					var playerPos:Pos = new Pos();
 					var playerView:View = new View();
 					playerView.graphics.beginFill(0x00ff00);
-					playerView.graphics.drawRect(0,0,Constants.kTileSize,Constants.kTileSize);
+					playerView.graphics.drawRect(0,0,Constants.kPlayerWidth,Constants.kPlayerWidth);
 					//player.set([playerPos, playerView]);
 					//tile = new MovieClip();
 					//tile.addChild(playerView);
 					tile = m_player = new Player();
 					m_player.Initialise(tilePos, map, EpicGameJam.gameJam);
 					m_player.addChild(playerView);
-					playerView.x -= Constants.kTileSize / 2;
-					playerView.y -= Constants.kTileSize / 2;
+					playerView.x -= Constants.kPlayerWidth / 2;
+					playerView.y -= Constants.kPlayerWidth / 2;
 					//tilePos = m_player.m_Pos;
 					
 				}

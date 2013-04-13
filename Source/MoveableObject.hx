@@ -57,7 +57,7 @@ class MoveableObject extends MovieClip, implements IAABB, implements ICircle
 		if ( m_TileMapped )
 		{
 			pos.m_x += Constants.kTileSize/2;
-			pos.m_y += Constants.kTileSize-m_radius;
+			pos.m_y += Constants.kTileSize / 2;//Constants.kTileSize-m_radius;
 		}
 		
 		m_pos = pos;
