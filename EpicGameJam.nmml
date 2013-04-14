@@ -4,7 +4,8 @@
 	<meta title="EpicGameJam" package="" version="1.0.0" company="Jonathan Dunlap" />
 	<app path="Export" file="EpicGameJam" main="EpicGameJam" />
 	
-	<window width="800" height="600" if="desktop" />
+	<window width="640" height="320" background="0xFFFFFF" fps="30" />
+	<window width="640" height="320" if="desktop" />
 	<window fps="30" />
 	
 	<source path="Source" />

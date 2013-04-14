@@ -3,36 +3,51 @@ import model.Movement;
 import model.MoveNode;
 import model.Pos;
 import nme.errors.Error;
+import maths.Vector2;
+import level.Map;
+import geom.Contact;
 
 /**
  * ...
- * @author Jonathan Dunlap
+ * @author Greg Back
  */
 
 class Move implements ISystem
 {
+	var currentEntity:Int = 0;
+	
 	//var models:Array<MoveNode>;
 	var posList:Array<Pos>;
-	var moveList:Array<Movement>;
+	var velList:Array<Movement>;
 	
-	public function new() 
+	var m_platformer:EpicGameJam;
+	var m_map:Map;
+	var m_contact:Contact;
+	
+	public function new(map:Map, parent:EpicGameJam) 
 	{
 		//models = new Array<MoveNode>();
 		
-		moveList = new Array<Movement>();
-		posList = new Array<Pos>();
+		velList = new Array<Pos>();
+		posList = new Array<Movement>();
+		
+		
 	}
 	public function remove(entity:Entity):Void {
 		posList.push(entity.fetch(Pos));
 		moveList.push(entity.fetch(Movement));
 	}
 	public function add(entity:Entity):Void {
-		posList.push(entity.fetch(Pos));
+		var pos:Pos = entity.fetch(Pos);
+		pos.radius = Constants.kPlayerWidth / 2;
+		pos.halfExtents = new Vector2( pos.radius, pos.radius );
+		posList.push(pos);
 		moveList.push(entity.fetch(Movement));
+		
+		
 	}
 	
 	public function update(time:Float):Void {
-		var current:Int=0;
 		while (current < posList.length) {
 			var pos  = posList[current];
 			var movement = moveList[current];

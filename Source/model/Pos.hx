@@ -9,16 +9,22 @@ import nme.geom.Point;
 
 class Pos 
 {
-	public var vec:Vector2;
-	public var x:Int;
-	public var y:Int;
-	public var rotation:Float;
+	public var pos:Vector2;
+	public var posCorrect:Vector2;
+	public var vel:Vector2;
+	public var radius:Float;
+	public var halfExtents:Vector2
+	
+	public var onGround:Bool;
+	public var onGroundLast:Bool;
 	
 	public function new() 
 	{
-		vec = new Vector2();
-		x = y = 0;
-		rotation = 0;
+		pos = new Vector2();
+		posCorrect = new Vector2();
+		vel = new Vector2();
+		radius = Constants.kPlayerWidth / 2;
+		halfExtents = new Vector2();
 	}
 	
 }

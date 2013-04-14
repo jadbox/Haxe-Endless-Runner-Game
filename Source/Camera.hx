@@ -14,7 +14,7 @@ package;
 	
 	class Camera
 	{
-		static public var kInitialZoom:Float = 1;
+		static public var kInitialZoom:Float = .75;
 		static private var kMinScale:Float = 1;
 		static private var kMaxScale:Float = 1;
 		
@@ -40,7 +40,7 @@ package;
 			m_character = character;
 			m_scale = new Vector2(kInitialZoom,kInitialZoom);
 			
-			var screenCentre:Vector2 = new Vector2( Constants.kScreenDimensions.m_x * .1, Constants.kScreenDimensions.m_y * .1 );
+			var screenCentre:Vector2 = new Vector2( Constants.kScreenDimensions.m_x * .5, Constants.kScreenDimensions.m_y * .5 );
 			m_screenSpaceAABB = new AABB
 								(
 									screenCentre,
@@ -79,7 +79,8 @@ package;
 						
 			m_worldToScreen.translate( translate.m_x, translate.m_y );
 			m_worldToScreen.scale( m_scale.m_x, m_scale.m_y );
-			m_worldToScreen.translate( Constants.kScreenDimensions.m_x/2, Constants.kScreenDimensions.m_y/2 );
+			//defines where on the screen the character is centered
+			m_worldToScreen.translate( Constants.kScreenDimensions.m_x * .5, Constants.kScreenDimensions.m_y * .5 );
 			
 			// this is essential to stop cracks appearing between tiles as we scroll around - because cacheToBitmap means
 			// sprites can only be positioned on whole pixel boundaries, sub-pixel camera movements cause gaps to appear.

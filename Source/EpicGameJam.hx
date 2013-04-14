@@ -49,6 +49,8 @@ class EpicGameJam extends Sprite {
 		addChild(game);
 		
 		var mo:MoveableObject = new MoveableObject();
+		
+		trace("screen size: " + Lib.current.stage.stageWidth + ", " + Lib.current.stage.stageHeight);
 		/*var e:Entity = Entity.make("Pos+Movement");
 		e.set(View.get());
 		//trace("post set");
