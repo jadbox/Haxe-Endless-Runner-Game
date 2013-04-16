@@ -1,121 +1,132 @@
 package mutator;
-import model.Movement;
-import model.MoveNode;
-import model.Pos;
-import nme.errors.Error;
+
+import geom.AABB;
+import maths.Vector2;
+import mutator.Move;
 import nme.ui.Keyboard;
-import nme.Lib;
-import model.Collider;
+import maths.Scalar;
+import level.Map;
 
-/**
- * ...
- * @author Greg Back
- */
-
-class PlayerMove implements ISystem
+class PlayerMove extends Move
 {
-	//var models:Array<MoveNode>;
-	var posList:Array<Pos>;
-	var moveList:Array<Movement>;
-	var colList:Array<Collider>;
+	//how high does player jump?
+	private static var kPlayerJumpVel:Float = 900 * 1.2;
+	//how many frames do they flash for?
+	private static var kHurtFrames:Int = 120;
+	//controls how fast the player's velocity moves towards the target velocity
+	//1 in one frame, 0 in never
+	private static var kReachTargetScale:Float = 0.7;
+	//how fast the player walks
+	private static var kWalkSpeed:Float = 80;
 	
-	inline static var maxVel:Int = 50;
+	private var m_velTarget:Vector2;
+	private var m_keyboard:KeyboardInput;
 	
-	public function new() 
+	private var m_tileAABB:AABB;
+	
+	private var m_hurtTimer:Int;
+	private var m_tryToMove:Bool;
+	private var m_flyMode:Bool;
+	
+	public function new(map:Map, parent:EpicGameJam) 
 	{
-		//models = new Array<MoveNode>();
+		super(map, parent);
 		
-		moveList = new Array<Movement>();
-		posList = new Array<Pos>();
-		colList = new Array<Collider>();
+		m_flyMode = false;
+		m_hurtTimer = 0;
+		//temp storage for collision against tiles
+		m_tileAABB = new AABB();
+		m_velTarget = new Vector2();
+		m_keyboard = EpicGameJam.keyInput;
 	}
-	public function add(entity:Entity):Void {
-		posList.push(entity.fetch(Pos));
-		moveList.push(entity.fetch(Movement));
-		colList.push(entity.fetch(Collider));
+	
+	public function MakeTemporaryilyInvunerable( ):Void
+	{
+		m_hurtTimer = kHurtFrames;
 	}
-	public function update(time:Float):Void {
-		var current:Int = 0;
-		
-		inline function movement():Void
+	
+	override function hasWorldCollision()
+	{
+		return true;
+	}
+	
+	override function processMove(time:Float):Void
+	{
+		keyboardControl(time);
+		//integrate velocity
+		if (m_flyMode)
 		{
-			var pos = posList[current];
-			var movement = moveList[current];
-			var collider = colList[current];
-			if (EpicGameJam.keyInput.getKeyDown(Keyboard.A))
-			{
-				movement.x -= 5;
-				if (movement.x < -maxVel) movement.x = -maxVel;
-			}
-			else if (EpicGameJam.keyInput.getKeyDown(Keyboard.D))
-			{
-				movement.x += 5;
-				if (movement.x > maxVel) movement.x = maxVel;
-			}
-			else
-			{
-				if (movement.x > 0) {
-					movement.x -= 5;
-					if (movement.x < 0) movement.x = 0;
-				}
-				if (movement.x < 0) {
-					movement.x += 5;
-					if (movement.x > 0) movement.x = 0;
-				}
-			}
-			var jumping:Bool;
-			var colliding:Bool;
-			if (EpicGameJam.keyInput.getKeyDown(Keyboard.W))
-				jumping = true;
-			else
-				jumping = false;
-			if (collider.colliders.length > 0)
-				colliding = true;
-			else
-				colliding = false;
-				
-			if (jumping && colliding)
-				movement.y -= 20;
-			
-			if (!colliding) {
-				movement.y += 10;
-			}else if(movement.y > 0){
-				movement.y = 0;
-			}
-			/*if (movement.vel.y < 0 && !colliding) {
-				movement.vel.y += 20;
-				trace("not colliding");
-				//if (movement.vel.y > 0) movement.vel.y = 0;
-			}
-			if (movement.vel.y > 0 && !colliding) {
-				movement.vel.y -= 20;
-				if (movement.vel.y < 0) movement.vel.y = 0;
-			}*/
-			
-			pos.x += movement.x;
-			pos.y += movement.y;
-			
-			if (colliding && !jumping) {
-				for (hit in collider.colliders) {
-					if (hit.col.kind == "ground") {
-						trace("hit: " + hit.col.kind + " " + hit.pos.y);
-						pos.y = hit.pos.y - 170;
-					}
-				}
-				//pos.y = Lib.current.stage.stageHeight - 170;
-			}
+			//cuts velocity while in air
+			currentPos.vel.MulScalarTo(0.5);
+		}else 
+		{
+			//propels y by gravity
+			currentPos.vel.AddYTo(Constants.kGravity);
 		}
-		
-		while (current < posList.length) {
-			movement();
-			current++;
+		//clamp speed
+		currentPos.vel.m_x = Scalar.Clamp(currentPos.vel.m_x, -Constants.kMaxSpeed, Constants.kMaxSpeed);
+		currentPos.vel.m_y = Math.min(currentPos.vel.m_y, Constants.kMaxSpeed * 2);
+		//carry out move
+		super.processMove(time);
+		if (m_hurtTimer > 0)
+		{
+			//do hurt stuff
+			//this.visible = (m_hurtTimer&1) == 1;
+			m_hurtTimer--;
 		}
 	}
 	
-	/* INTERFACE ISystem */
-	
-	public function remove(e:Entity):Void 
+	function keyboardControl(time:Float):Void
 	{
+		m_tryToMove = false;
 		
+		var moveSpeed:Float = 0;
+		if (m_flyMode)
+			moveSpeed = kWalkSpeed * 4;
+		else
+			moveSpeed = currentPos.onGround ? kWalkSpeed : kWalkSpeed / 2;
+		
+		m_velTarget.Clear();
+		
+		//standard walking controls
+		if (m_keyboard.getKeyDown(Keyboard.LEFT))
+		{
+			currentPos.vel.m_x -= moveSpeed;
+			m_tryToMove = true;
+			//face left
+			//this.scaleX = -1;
+		}
+		if (m_keyboard.getKeyDown(Keyboard.RIGHT))
+		{
+			currentPos.vel.m_x += moveSpeed;
+			m_tryToMove = true;
+			//face right
+			//this.scaleX = 1;
+		}
+		if (m_flyMode)
+		{
+			if (m_keyboard.getKeyDown(Keyboard.UP))
+			{
+				//fly mode controls (in control in air)
+				currentPos.vel.m_y -= moveSpeed;
+				m_tryToMove = true;
+			}
+		}else 
+		{
+			//standard jump controls (not in control in air)
+			if (m_keyboard.getKeyDownTransition(Keyboard.UP))
+			{
+				if (currentPos.onGround)
+					currentPos.vel.m_y -= kPlayerJumpVel;
+			}
+		}
+		
+		trace("player pos: " + currentPos.pos + ", player vel: " + currentPos.vel);
+	}
+	
+	override function applyFriction():Bool
+	{
+		return !m_tryToMove;
 	}
 }
+

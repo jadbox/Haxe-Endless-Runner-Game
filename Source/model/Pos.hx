@@ -13,7 +13,7 @@ class Pos
 	public var posCorrect:Vector2;
 	public var vel:Vector2;
 	public var radius:Float;
-	public var halfExtents:Vector2
+	public var halfExtents:Vector2;
 	
 	public var onGround:Bool;
 	public var onGroundLast:Bool;

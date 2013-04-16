@@ -35,7 +35,7 @@ class Scene implements ISystem
 	
 	public function update(time:Float):Void {
 		var current:Int = 0;
-		if (null != camPos) {
+		/*if (null != camPos) {
 			if (camPos.x > camCenter || camPos.x < camCenter)
 			{
 				scenePos.x += camPos.x - camCenter;
@@ -43,12 +43,12 @@ class Scene implements ISystem
 			}
 			camView.x = camPos.x;
 			camView.y = camPos.y;
-		}
+		}*/
 		while (current < posList.length) {
 			var pos  = posList[current];
 			var view = viewList[current];
-			view.x = pos.x - scenePos.x;
-			view.y = pos.y;
+			view.x = pos.pos.m_x;
+			view.y = pos.pos.m_y;
 			current++;
 		}
 	}

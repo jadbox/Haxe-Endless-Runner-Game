@@ -27,7 +27,7 @@ class KeyboardInput
 	function keyDown(keyDownEvent:KeyboardEvent):Void
 	{
 		keyStates.set(keyDownEvent.keyCode, true);
-		trace("key down: " + keyDownEvent.keyCode);
+		//trace("key down: " + keyDownEvent.keyCode);
 	}
 	
 	function keyUp(keyUpEvent:KeyboardEvent):Void

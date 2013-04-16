@@ -38,20 +38,23 @@ class Engine extends MovieClip
 	public function new() 
 	{
 		super();
-		trace("hi world");
+		trace("hi engine");
+		
+		map = new Map(this);
+		
 		systems = new Array<ISystem>();
 		entities = new Array<Entity>();
 		
 		addSystem(scene = new Scene(this));
-		addSystem(movement = new Move());
-		addSystem(playerMovement = new PlayerMove());
+		//addSystem(movement = new Move(map, EpicGameJam.gameJam));
+		addSystem(playerMovement = new PlayerMove(map, EpicGameJam.gameJam));
 		addSystem(collision = new Collision());
 		
-		map = new Map(this);
+		
 		CreateTilesInner(map.m_map);
 		var testpool:VectorPool = new VectorPool(10);
 		
-		m_camera = new Camera(this, m_player);
+		m_camera = new Camera(this, player.fetch(Pos));
 		
 	}
 	
@@ -93,17 +96,21 @@ class Engine extends MovieClip
 				{
 					addEntity(player = new Entity());
 					var playerPos:Pos = new Pos();
+					playerPos.pos = tilePos;
 					var playerView:View = new View();
+					player.set([playerPos, playerView]);
 					playerView.graphics.beginFill(0x00ff00);
-					playerView.graphics.drawRect(0,0,Constants.kPlayerWidth,Constants.kPlayerWidth);
-					//player.set([playerPos, playerView]);
+					playerView.graphics.drawRect(0, 0, Constants.kPlayerWidth, Constants.kPlayerWidth);
+					playerMovement.add(player);
+					scene.add(player);
+					
 					//tile = new MovieClip();
 					//tile.addChild(playerView);
-					tile = m_player = new Player();
-					m_player.Initialise(tilePos, map, EpicGameJam.gameJam);
-					m_player.addChild(playerView);
-					playerView.x -= Constants.kPlayerWidth / 2;
-					playerView.y -= Constants.kPlayerWidth / 2;
+					//tile = m_player = new Player();
+					//m_player.Initialise(tilePos, map, EpicGameJam.gameJam);
+					//m_player.addChild(playerView);
+					//playerView.x -= Constants.kPlayerWidth / 2;
+					//playerView.y -= Constants.kPlayerWidth / 2;
 					//tilePos = m_player.m_Pos;
 					
 				}
@@ -138,7 +145,7 @@ class Engine extends MovieClip
 	}*/
 	public function update(time:Float):Void {
 		for (s in systems) s.update(time);
-		m_player.Update(time);
+		//m_player.Update(time);
 		m_camera.Update(time);
 	}
 }

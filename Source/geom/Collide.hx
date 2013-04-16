@@ -52,6 +52,7 @@ package geom;
 		/// </summary>
 		static public function AabbVsAabb( a:IAABB, b:IAABB, outContact:Contact, tileI:Int, tileJ:Int, map:Map, checkInternal:Bool=true ):Bool
 		{
+			//sees how close a gets to b, add radius of a to b
 			var combinedExtentsB:Vector2 = EpicGameJam.m_gTempVectorPool.AllocateClone( b.getHalfExtents() ).AddTo(a.getHalfExtents());
 			var combinedPosB:Vector2 = b.getCentre();
 			

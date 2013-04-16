@@ -1,6 +1,7 @@
 package;
 
 	
+	import model.Pos;
 	import nme.display.MovieClip;
 	import nme.events.MouseEvent;
 	import geom.IAABB;
@@ -19,7 +20,7 @@ package;
 		static private var kMaxScale:Float = 1;
 		
 		private var m_parent:MovieClip;
-		private var m_character:MoveableObject;
+		private var m_character:Pos;
 		private var m_scale:Vector2;
 		private var m_translate:Vector2;
 		private var m_worldToScreen:Matrix;
@@ -34,7 +35,7 @@ package;
 		/// <summary>
 		/// 
 		/// </summary>	
-		public function new(parent:MovieClip, character:MoveableObject)
+		public function new(parent:MovieClip, character:Pos)
 		{
 			m_parent = parent;
 			m_character = character;
@@ -47,7 +48,7 @@ package;
 									screenCentre
 								);
 								
-			m_cameraPos = character.getPos().Clone();
+			m_cameraPos = character.pos.Clone();
 			
 			Update(0);
 		}
@@ -59,12 +60,12 @@ package;
 		{
 			m_worldToScreen = new Matrix();
 			
-			var translate:Vector2 = EpicGameJam.m_gTempVectorPool.AllocateClone( m_character.getPos() ).NegTo( );
+			var translate:Vector2 = EpicGameJam.m_gTempVectorPool.AllocateClone( m_character.pos ).NegTo( );
 
 			var screenHalfExtents:Vector2 = EpicGameJam.m_gTempVectorPool.Allocate( [Constants.kScreenDimensions.m_x*0.2/m_scale.m_x, Constants.kScreenDimensions.m_y*.5/m_scale.m_y] );
 
-			var topLeft:Vector2 = EpicGameJam.m_gTempVectorPool.AllocateClone(m_character.getPos()).SubFrom(screenHalfExtents);
-			var bottomRight:Vector2 = EpicGameJam.m_gTempVectorPool.AllocateClone(m_character.getPos()).AddTo(screenHalfExtents);
+			var topLeft:Vector2 = EpicGameJam.m_gTempVectorPool.AllocateClone(m_character.pos).SubFrom(screenHalfExtents);
+			var bottomRight:Vector2 = EpicGameJam.m_gTempVectorPool.AllocateClone(m_character.pos).AddTo(screenHalfExtents);
 
 			var correctLeft:Float = Math.min(topLeft.m_x+Constants.kWorldHalfExtents.m_x, 0);
 			var correctTop:Float = Math.min(topLeft.m_y+Constants.kWorldHalfExtents.m_y, 0);
@@ -189,7 +190,7 @@ package;
 		/// <summary>
 		/// 
 		/// </summary>	
-		public function SetTarget( target:MoveableObject ):Void
+		public function SetTarget( target:Pos ):Void
 		{
 			m_character = target;
 		}

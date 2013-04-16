@@ -7,21 +7,26 @@ import nme.errors.Error;
 import maths.Vector2;
 import level.Map;
 import geom.Contact;
+import geom.Collide;
+import geom.IAABB;
 
 /**
  * ...
  * @author Greg Back
  */
 
-class Move implements ISystem implements IAABB
+class Move implements ISystem, implements IAABB
 {
+	// friction with ground - 1=totally sticky, 0=ice
+	private static var kGroundFriction:Float = 0.6;
+	
 	var currentEntity:Int = 0;
 	
 	var currentPos:Pos;
 	
 	//var models:Array<MoveNode>;
 	var posList:Array<Pos>;
-	var velList:Array<Movement>;
+	//var moveList:Array<Movement>;
 	
 	var m_platformer:EpicGameJam;
 	var m_map:Map;
@@ -30,27 +35,30 @@ class Move implements ISystem implements IAABB
 	public function new(map:Map, parent:EpicGameJam) 
 	{
 		//models = new Array<MoveNode>();
+		m_map = map;
+		m_platformer = parent;
+		posList = new Array<Pos>();
+		//moveList = new Array<Movement>();
 		
-		velList = new Array<Pos>();
-		posList = new Array<Movement>();
-		
-		
+		//should be moved to Pos
+		m_contact = new Contact( );
 	}
 	public function remove(entity:Entity):Void {
 		posList.push(entity.fetch(Pos));
-		moveList.push(entity.fetch(Movement));
+		//moveList.push(entity.fetch(Movement));
 	}
 	public function add(entity:Entity):Void {
 		var pos:Pos = entity.fetch(Pos);
 		pos.radius = Constants.kPlayerWidth / 2;
 		pos.halfExtents = new Vector2( pos.radius, pos.radius );
 		posList.push(pos);
-		moveList.push(entity.fetch(Movement));
+		//moveList.push(entity.fetch(Movement));
 		
 		
 	}
 	
 	public function update(time:Float):Void {
+		currentEntity = 0;
 		while (currentEntity < posList.length) {
 			//var pos  = posList[current];
 			//var movement = moveList[current];
@@ -64,22 +72,30 @@ class Move implements ISystem implements IAABB
 	
 	function processMove(time:Float):Void
 	{
-		
+		trace("time is processing");
 		//apply gravity
 		if (applyGravity()) {
 			currentPos.vel.AddYTo(Constants.kGravity);
 			//clamp max fall speed
-			currentPos.vel.m_y = Math.min(Constants.kMaxSpeed*2);
+			currentPos.vel.m_y = Math.min(currentPos.vel.m_y, Constants.kMaxSpeed*2);
 		}
-		if (hasWorldCollision())
-			collide(time)
+		if (hasWorldCollision()) {
+			//do complex world collision
+			collide(time);
+		}
+		//integrate position
+		currentPos.pos.MulAddScalarTo(currentPos.vel.Add(currentPos.posCorrect), time);
+		
+		
+		
+		currentPos.posCorrect.Clear();
 	}
 	
 	function collide(time:Float):Void
 	{
 		var predictedPos:Vector2 = EpicGameJam.m_gTempVectorPool.AllocateClone(currentPos.pos).MulAddScalarTo(currentPos.vel, time);
 		
-		//find min/max
+		//find min/max area that is collidable
 		var min:Vector2 = currentPos.pos.Min(predictedPos);
 		var max:Vector2 = currentPos.pos.Max(predictedPos);
 		//extend by radius
@@ -91,8 +107,8 @@ class Move implements ISystem implements IAABB
 		max.AddTo(Constants.kExpand);
 		
 		//pre collision code
-		pos.onGroundLast = currentPos.onGround;
-		pos.onGround = false;
+		currentPos.onGroundLast = currentPos.onGround;
+		currentPos.onGround = false;
 		
 		//collision
 		m_map.DoActionToTilesWithinAabb(min, max, innerCollide, time);
@@ -106,11 +122,11 @@ class Move implements ISystem implements IAABB
 		if ( Map.IsTileObstacle( tileType ) )
 		{
 			// standard collision responce
-			var a
+			trace("tileAabb: " + tileAabb + ", m_contact: " + m_contact);
 			var collided:Bool = Collide.AabbVsAabb( this, tileAabb, m_contact, i, j, m_map );
 			if ( collided )
 			{
-				collisionResponse( m_contact.m_normal, m_contact.m_dist, dt );
+				collisionResponse( m_contact.m_normal, m_contact.m_dist, time );
 			}
 		}
 	}
@@ -128,59 +144,60 @@ class Move implements ISystem implements IAABB
 	/// <summary>
 	/// Collision Reponse - remove normal velocity
 	/// </summary>	
-	function collisionResponse( normal:Vector2, dist:Float, dt:Float ):Void
+	function collisionResponse( normal:Vector2, dist:Float, time:Float ):Void
 	{
 		// get the separation and penetration separately, this is to stop pentration 
 		// from causing the objects to ping apart
 		var separation:Float = Math.max( dist, 0 );
 		var penetration:Float = Math.min( dist, 0 );
 		
-		// compute relative normal velocity require to be object to an exact stop at the surface
-		var nv:Float = m_vel.Dot( normal ) + separation/dt;
+		//compute the relative normal velocity required to bring object to an exact stop at the surface
+		var nv:Float = currentPos.vel.Dot(normal) + separation / time;
 		
-		// accumulate the penetration correction, this is applied in Update() and ensures
-		// we don't add any energy to the system
-		m_posCorrect.SubFrom( normal.MulScalar( penetration/dt ) );
-		
-		if ( nv<0 )
+		//accumulate the penetration correction, this is applied in update() and ensures we don't
+		//add any energy to the system
+		currentPos.posCorrect.SubFrom(normal.MulScalar(penetration / time));
+		if (nv < 0)
 		{
-			// remove normal velocity
-			m_vel.SubFrom( normal.MulScalar( nv ) );
-			
-			// is this some ground?
-			if ( normal.m_y<0 )
+			//remove normal velocity(stops it)
+			currentPos.vel.SubFrom(normal.MulScalar(nv));
+			//is this ground?
+			if (normal.m_y < 0)
 			{
-				m_onGround = true;
-				
-				// friction
-				if ( m_ApplyFriction )
+				currentPos.onGround = true;
+				//friction
+				if (applyFriction())
 				{
-					// get the tanget from the normal (perp vector)
+					//get the tangent from the normal (perpendicular vector)
 					var tangent:Vector2 = normal.m_Perp;
-					
-					// compute the tangential velocity, scale by friction
-					var tv:Float = m_vel.Dot( tangent )*kGroundFriction;
-					
-					// subtract that from the main velocity
-					m_vel.SubFrom( tangent.MulScalar( tv ) );
+					//compute the tangential velocity, then scale by friction
+					var tv:Float = currentPos.vel.Dot(tangent) * kGroundFriction;
+					//subtract that from the main velocity
+					currentPos.vel.SubFrom(tangent.MulScalar(tv));
 				}
 				
-				if (!m_onGroundLast)
-				{
-					// this transition occurs when this object 'lands' on the ground
-					LandingTransition( );
-				} 
+				if (!currentPos.onGroundLast)
+					landingTransition();
 			}
 		}
 	}
 	
+	function landingTransition( ):Void
+	{
+	}
+	
 	function applyGravity():Bool
 	{
-		return true;
+		return false;
+	}
+	
+	function applyFriction():Bool
+	{
+		return false;
 	}
 	
 	function hasWorldCollision():Bool
 	{
-		
+		return false;
 	}
 }
