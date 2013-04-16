@@ -114,6 +114,9 @@ class Engine extends MovieClip
 					//tilePos = m_player.m_Pos;
 					
 				}
+				case TileTypes.kEnemy:
+					var enemy:Entity = new Entity();
+					addEntity(enemy);
 				default: Util.Assert( false, "Unexpected tile code " + tileCode );
 			}
 			
