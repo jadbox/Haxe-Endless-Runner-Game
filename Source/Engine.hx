@@ -98,9 +98,14 @@ class Engine extends MovieClip
 					var playerPos:Pos = new Pos();
 					playerPos.pos = tilePos;
 					var playerView:View = new View();
+					var playerSprite:Sprite = new Sprite();
 					player.set([playerPos, playerView]);
-					playerView.graphics.beginFill(0x00ff00);
-					playerView.graphics.drawRect(0, 0, Constants.kPlayerWidth, Constants.kPlayerWidth);
+					playerSprite.graphics.beginFill(0x00ff00);
+					playerSprite.graphics.drawRect(0, 0, Constants.kPlayerWidth, Constants.kPlayerWidth);
+					playerSprite.x -= Constants.kPlayerWidth / 2;
+					playerSprite.y -= Constants.kPlayerWidth / 2;
+					playerView.addChild(playerSprite);
+					
 					playerMovement.add(player);
 					scene.add(player);
 					

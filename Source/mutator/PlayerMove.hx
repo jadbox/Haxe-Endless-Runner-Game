@@ -3,6 +3,7 @@ package mutator;
 import geom.AABB;
 import maths.Vector2;
 import mutator.Move;
+import nme.display.Sprite;
 import nme.ui.Keyboard;
 import maths.Scalar;
 import level.Map;
