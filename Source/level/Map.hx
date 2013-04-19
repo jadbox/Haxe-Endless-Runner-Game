@@ -21,6 +21,7 @@ class Map
 	public static var m_Height:Int = 19;
 		
 	// map for the level
+	public var mapBlocks:Array<Array<Int>>;
 	public var m_map(default,null):Array<Int>;
 	
 
@@ -39,22 +40,27 @@ class Map
 			1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,
 			1,0,1,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,1,
 			1,0,0,0,3,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,
-			1,0,0,1,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,1,
-			1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,
-			1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-			1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,
-			1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,
-			1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,1,
-			1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,
+			1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,
+			0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+			1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,
+			1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,
+			1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,
+			1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,
 			1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 			
 		];
+		mapBlocks = new Array<Array<Int>>();
+		for (i in 0...5) {
+			mapBlocks.push(m_map.slice(0, m_map.length - 1));
+		}
+		//var map2:Array<Int> = m_map.slice(0, m_map.length - 1);
 		m_Platformer = platformer;
 		Util.Assert(m_map.length == m_Width * m_Height, "Map Dimensions don't match constants!");
 		m_aabbTemp = new AABB();
 		
 		//the map defines world extents
-			Constants.kWorldHalfExtents = new Vector2( m_Width*Constants.kTileSize*0.5, m_Height*Constants.kTileSize*0.5 );
+			Constants.kWorldHalfExtents = new Vector2( mapBlocks.length * m_Width*Constants.kTileSize*0.5, m_Height*Constants.kTileSize*0.5 );
 		
 	}
 	
@@ -62,7 +68,9 @@ class Map
 	{
 		//Assert( i>=0&&i<=m_Width && j>=0 && j<=m_Height, "Map.GetTile(): index out of range" );
 		//return m_Map[j*m_Width+i];
-		return GetTileSafe( m_map, i, j );
+		var localMapIndex:Int = Math.floor(i / m_Width);
+		var localMap:Array<Int> = mapBlocks[localMapIndex];
+		return GetTileSafe( localMap, i - (localMapIndex * m_Width), j );
 	}
 	
 	/// <summary>

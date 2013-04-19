@@ -51,14 +51,18 @@ class Engine extends MovieClip
 		addSystem(collision = new Collision());
 		
 		
-		CreateTilesInner(map.m_map);
-		var testpool:VectorPool = new VectorPool(10);
+		//CreateTilesInner(map.m_map);
+		
+		for (i in 0...map.mapBlocks.length)
+		{
+			CreateTilesInner(map.mapBlocks[i], i);
+		}
 		
 		m_camera = new Camera(this, player.fetch(Pos));
 		
 	}
 	
-	private function CreateTilesInner( tileSet:Array<Int>, addtoScene:Bool=true ):Void
+	private function CreateTilesInner( tileSet:Array<Int>, block:Int = 0, addtoScene:Bool=true ):Void
 	{
 		var index:Int = 0;
 		for ( tileCode in tileSet )
@@ -69,7 +73,7 @@ class Engine extends MovieClip
 			var tileI:Int = Std.int(index%Map.m_Width);
 			var tileJ:Int = Std.int(index/Map.m_Width);
 			
-			var tileX:Int = Std.int(Map.TileCoordsToWorldX(tileI));
+			var tileX:Int = Std.int(Map.TileCoordsToWorldX(tileI)) + (Map.m_Width * Constants.kTileSize * block);
 			var tileY:Int = Std.int(Map.TileCoordsToWorldY(tileJ));
 			
 			var tilePos:Vector2 = new Vector2( tileX, tileY );
@@ -94,6 +98,7 @@ class Engine extends MovieClip
 				//
 				case TileTypes.kPlayer:
 				{
+					if(block == 0){
 					addEntity(player = new Entity());
 					var playerPos:Pos = new Pos();
 					playerPos.pos = tilePos;
@@ -108,7 +113,7 @@ class Engine extends MovieClip
 					
 					playerMovement.add(player);
 					scene.add(player);
-					
+					}
 					//tile = new MovieClip();
 					//tile.addChild(playerView);
 					//tile = m_player = new Player();
