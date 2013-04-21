@@ -50,101 +50,15 @@ class Engine extends MovieClip
 		addSystem(playerMovement = new PlayerMove(map, EpicGameJam.gameJam));
 		addSystem(collision = new Collision());
 		
-		
+		var lvlBuild:LevelBuilder = new LevelBuilder(this);
+		lvlBuild.constructLevel(map);
 		//CreateTilesInner(map.m_map);
-		
-		for (i in 0...map.mapBlocks.length)
-		{
-			CreateTilesInner(map.mapBlocks[i], i);
-		}
 		
 		m_camera = new Camera(this, player.fetch(Pos));
 		
 	}
 	
-	private function CreateTilesInner( tileSet:Array<Int>, block:Int = 0, addtoScene:Bool=true ):Void
-	{
-		var index:Int = 0;
-		for ( tileCode in tileSet )
-		{
-			var tile:MovieClip = null;
-			
-			// calculate the position of each tile: 0,0 maps to Constants.kWorldHalfExtents
-			var tileI:Int = Std.int(index%Map.m_Width);
-			var tileJ:Int = Std.int(index/Map.m_Width);
-			
-			var tileX:Int = Std.int(Map.TileCoordsToWorldX(tileI)) + (Map.m_Width * Constants.kTileSize * block);
-			var tileY:Int = Std.int(Map.TileCoordsToWorldY(tileJ));
-			
-			var tilePos:Vector2 = new Vector2( tileX, tileY );
-			
-			// create each tile
-			switch ( tileCode )
-			{
-				//
-				// foreground tiles
-				//
-				case TileTypes.kEmpty:
-					tile = null;
-				case TileTypes.kPlatform:
-				{
-					tile = new MovieClip( );
-					tile.graphics.beginFill( 0xff0000 );
-					tile.graphics.drawRect( 0, 0, Constants.kTileSize, Constants.kTileSize );
-					tile.graphics.endFill( );
-				}
-				//
-				// characters
-				//
-				case TileTypes.kPlayer:
-				{
-					if(block == 0){
-					addEntity(player = new Entity());
-					var playerPos:Pos = new Pos();
-					playerPos.pos = tilePos;
-					var playerView:View = new View();
-					var playerSprite:Sprite = new Sprite();
-					player.set([playerPos, playerView]);
-					playerSprite.graphics.beginFill(0x00ff00);
-					playerSprite.graphics.drawRect(0, 0, Constants.kPlayerWidth, Constants.kPlayerWidth);
-					playerSprite.x -= Constants.kPlayerWidth / 2;
-					playerSprite.y -= Constants.kPlayerWidth / 2;
-					playerView.addChild(playerSprite);
-					
-					playerMovement.add(player);
-					scene.add(player);
-					}
-					//tile = new MovieClip();
-					//tile.addChild(playerView);
-					//tile = m_player = new Player();
-					//m_player.Initialise(tilePos, map, EpicGameJam.gameJam);
-					//m_player.addChild(playerView);
-					//playerView.x -= Constants.kPlayerWidth / 2;
-					//playerView.y -= Constants.kPlayerWidth / 2;
-					//tilePos = m_player.m_Pos;
-					
-				}
-				case TileTypes.kEnemy:
-					var enemy:Entity = new Entity();
-					addEntity(enemy);
-				default: Util.Assert( false, "Unexpected tile code " + tileCode );
-			}
-			
-			if ( tile!=null )
-			{
-				tile.x = tilePos.m_x;
-				tile.y = tilePos.m_y;
-				tile.cacheAsBitmap = true;
-				
-				if ( addtoScene )
-				{
-					this.addChild( tile );
-				}
-			}
-			
-			index++;
-		}
-	}
+	
 	
 	public function addEntity(entity:Entity):Void {
 		entities.push(entity);
