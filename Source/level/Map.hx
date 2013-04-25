@@ -3,6 +3,7 @@ package level;
 
 import maths.Vector2;
 import geom.AABB;
+import nme.Assets;
 
 /**
  * ...
@@ -50,6 +51,10 @@ class Map
 			1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 			
 		];
+		
+		
+		parseLevel();
+		
 		mapBlocks = new Array<Array<Int>>();
 		for (i in 0...5) {
 			mapBlocks.push(m_map.slice(0, m_map.length - 1));
@@ -62,6 +67,15 @@ class Map
 		//the map defines world extents
 			Constants.kWorldHalfExtents = new Vector2( mapBlocks.length * m_Width*Constants.kTileSize*0.5, m_Height*Constants.kTileSize*0.5 );
 		
+	}
+	
+	function parseLevel():Void
+	{
+		var levelRaw:String = Assets.getText("assets/level2.oel");
+		//trace("level: " + levelRaw);
+		var level:Xml = Xml.parse(levelRaw);
+		//trace(level);
+		trace(level.elements().next() );
 	}
 	
 	public function GetTile( i:Int, j:Int ):Int

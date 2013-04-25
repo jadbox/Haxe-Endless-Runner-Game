@@ -15,7 +15,7 @@ package;
 	
 	class Camera
 	{
-		static public var kInitialZoom:Float = .75;
+		static public var kInitialZoom:Float = 2.75;
 		static private var kMinScale:Float = 1;
 		static private var kMaxScale:Float = 1;
 		

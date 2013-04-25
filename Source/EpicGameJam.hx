@@ -48,39 +48,7 @@ class EpicGameJam extends Sprite {
 		var game:Engine = new Engine();
 		addChild(game);
 		
-		var mo:MoveableObject = new MoveableObject();
-		
 		trace("screen size: " + Lib.current.stage.stageWidth + ", " + Lib.current.stage.stageHeight);
-		/*var e:Entity = Entity.make("Pos+Movement");
-		e.set(View.get());
-		//trace("post set");
-		game.addEntity(e);
-		
-		//var scene:Scene = new Scene(this);
-		//game.addSystem(scene);
-		game.movement.add(e);
-		game.scene.add(e);*/
-		
-		/*var player:Entity = new Entity();
-		//set player as the unique case for scene
-		player.id = 1;
-		var v:View = View.get("assets/megapony.png");
-		v.scaleX = v.scaleY = .2;
-		player.set([new Pos(), new Movement(25), v, new Collider("player", v.width, v.height)]);
-		game.addEntity(player);
-		game.playerMovement.add(player);
-		game.scene.add(player);
-		game.collision.add(player);
-		
-		var ground:Entity = new Entity();
-		var groundView:View = new View();
-		groundView.graphics.beginFill(0xff0000, 1);
-		groundView.graphics.drawRect(0, 0, Lib.current.stage.stageWidth, 10);
-		var groundPos:Pos = new Pos();
-		groundPos.y = Lib.current.stage.stageHeight - 10;
-		ground.set([groundPos, groundView, new Collider("ground", groundView.width, groundView.height)]);
-		game.scene.add(ground);
-		game.collision.add(ground);*/
 		
 		
 		addEventListener(Event.ENTER_FRAME, function(e):Void {

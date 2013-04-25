@@ -11,14 +11,14 @@ import level.Map;
 class PlayerMove extends Move
 {
 	//how high does player jump?
-	private static var kPlayerJumpVel:Float = 900 * 1.2;
+	private static var kPlayerJumpVel:Float = 450;
 	//how many frames do they flash for?
 	private static var kHurtFrames:Int = 120;
 	//controls how fast the player's velocity moves towards the target velocity
 	//1 in one frame, 0 in never
-	private static var kReachTargetScale:Float = 0.7;
+	private static var kReachTargetScale:Float = 0.4;
 	//how fast the player walks
-	private static var kWalkSpeed:Float = 80;
+	private static var kWalkSpeed:Float = 40;
 	
 	private var m_velTarget:Vector2;
 	private var m_keyboard:KeyboardInput;
@@ -122,7 +122,7 @@ class PlayerMove extends Move
 			}
 		}
 		
-		trace("player pos: " + currentPos.pos + ", player vel: " + currentPos.vel);
+		//trace("player pos: " + currentPos.pos + ", player vel: " + currentPos.vel);
 	}
 	
 	override function applyFriction():Bool

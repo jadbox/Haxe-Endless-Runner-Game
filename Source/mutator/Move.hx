@@ -52,8 +52,6 @@ class Move implements ISystem, implements IAABB
 		pos.radius = Constants.kPlayerWidth / 2;
 		pos.halfExtents = new Vector2( pos.radius, pos.radius );
 		posList.push(pos);
-		//moveList.push(entity.fetch(Movement));
-		
 		
 	}
 	
@@ -72,7 +70,7 @@ class Move implements ISystem, implements IAABB
 	
 	function processMove(time:Float):Void
 	{
-		trace("time is processing");
+		//trace("time is processing");
 		//apply gravity
 		if (applyGravity()) {
 			currentPos.vel.AddYTo(Constants.kGravity);
@@ -122,7 +120,7 @@ class Move implements ISystem, implements IAABB
 		if ( Map.IsTileObstacle( tileType ) )
 		{
 			// standard collision responce
-			trace("tileAabb: " + tileAabb + ", m_contact: " + m_contact);
+			//trace("tileAabb: " + tileAabb + ", m_contact: " + m_contact);
 			var collided:Bool = Collide.AabbVsAabb( this, tileAabb, m_contact, i, j, m_map );
 			if ( collided )
 			{
