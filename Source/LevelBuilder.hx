@@ -8,6 +8,7 @@ import maths.Vector2;
 import nme.display.MovieClip;
 import nme.display.Sprite;
 import model.View;
+import nme.Assets;
 
 class LevelBuilder
 {

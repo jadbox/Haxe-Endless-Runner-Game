@@ -19,7 +19,7 @@ class Map
 	private var m_Platformer:Engine;
 	
 	public static var m_Width:Int = 20;
-	public static var m_Height:Int = 19;
+	public static var m_Height:Int = 15;
 		
 	// map for the level
 	public var mapBlocks:Array<Array<Int>>;
@@ -28,7 +28,7 @@ class Map
 
 	public function new(platformer:Engine) 
 	{
-		m_map = 
+		/*m_map = 
 		[
 			1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 			1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,
@@ -50,17 +50,18 @@ class Map
 			1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,
 			1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 			
-		];
+		];*/
 		
 		
-		parseLevel();
+		m_map = parseLevel();
 		
 		mapBlocks = new Array<Array<Int>>();
 		for (i in 0...5) {
-			mapBlocks.push(m_map.slice(0, m_map.length - 1));
+			mapBlocks.push(m_map.slice(0, m_map.length));
 		}
 		//var map2:Array<Int> = m_map.slice(0, m_map.length - 1);
 		m_Platformer = platformer;
+		trace(m_map.length);
 		Util.Assert(m_map.length == m_Width * m_Height, "Map Dimensions don't match constants!");
 		m_aabbTemp = new AABB();
 		
@@ -69,13 +70,35 @@ class Map
 		
 	}
 	
-	function parseLevel():Void
+	static inline function ogmoXYToArraySpace(x:Int, y:Int):Int
+	{
+		return Math.floor((x / Constants.kTileSize) + ((y / Constants.kTileSize) * m_Width));
+	}
+	
+	function parseLevel():Array<Int>
 	{
 		var levelRaw:String = Assets.getText("assets/level2.oel");
 		//trace("level: " + levelRaw);
 		var level:Xml = Xml.parse(levelRaw);
 		//trace(level);
 		trace(level.elements().next() );
+		trace(level.elements().next().elements().next().firstChild().nodeValue);
+		var playerNode:Xml = level.elements().next().elementsNamed("entity").next().elementsNamed("player").next();
+		
+		var playerPos:Int = ogmoXYToArraySpace(Std.parseInt(playerNode.get("x")),Std.parseInt(playerNode.get("y")));
+		
+		trace(level.elements().next().elementsNamed("entity").next().elements().next().get("x"));
+		var level:String = level.elements().next().elements().next().firstChild().nodeValue;
+		level = StringTools.replace(level, " ", "");
+		var levelArray:Array<Int> = new Array<Int>();
+		for (i in 0...level.length) {
+			var char:String = level.charAt(i);
+			if (char != "0" && char != "1") trace("char " + char.charCodeAt(0));
+			if(!StringTools.isSpace(level, i))levelArray.push(Std.parseInt(char));
+		}
+		trace("playerPos: " + playerPos + "in level array: " + levelArray[playerPos]);
+		levelArray[playerPos] = 2;
+		return levelArray;
 	}
 	
 	public function GetTile( i:Int, j:Int ):Int
@@ -95,8 +118,7 @@ class Map
 		if ( i>=0&&i<m_Width&&j>=0&&j<m_Height )
 		{
 			return map[j*m_Width+i];
-		}
-		else 
+		}else 
 		{
 			return TileTypes.kInvalid;
 		}
