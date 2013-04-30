@@ -1,6 +1,7 @@
 package com.jumper.model;
-import maths.Vector2;
+import com.jumper.maths.Vector2;
 import nme.geom.Point;
+import com.jumper.Constants;
 
 /**
  * ...

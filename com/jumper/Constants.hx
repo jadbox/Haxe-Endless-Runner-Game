@@ -1,6 +1,6 @@
 package com.jumper;
 
-import maths.Vector2;
+import com.jumper.maths.Vector2;
 
 class Constants
 {

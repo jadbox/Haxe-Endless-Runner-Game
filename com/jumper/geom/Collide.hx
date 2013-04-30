@@ -1,10 +1,10 @@
-package geom;
+package com.jumper.geom;
 
 
-	import maths.Vector2;
-	import level.TileTypes;
-	import Constants;
-	import level.Map;
+	import com.jumper.maths.Vector2;
+	import com.jumper.level.TileTypes;
+	import com.jumper.Constants;
+	import com.jumper.level.Map;
 	
 	class Collide
 	{

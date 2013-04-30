@@ -1,13 +1,13 @@
 package com.jumper;
 
-import level.Map;
-import maths.Vector2;
-import level.TileTypes;
-import model.Pos;
-import maths.Vector2;
+import com.jumper.level.Map;
+import com.jumper.maths.Vector2;
+import com.jumper.level.TileTypes;
+import com.jumper.model.Pos;
+import com.jumper.maths.Vector2;
 import nme.display.MovieClip;
 import nme.display.Sprite;
-import model.View;
+import com.jumper.model.View;
 import nme.Assets;
 
 class LevelBuilder

@@ -1,6 +1,6 @@
-package geom;
+package com.jumper.geom;
 
-import maths.Vector2;
+import com.jumper.maths.Vector2;
 
 interface ICircle
 {

@@ -1,8 +1,8 @@
 package com.jumper.mutator;
 
-import model.DisplayNode;
-import model.Pos;
-import model.View;
+import com.jumper.model.DisplayNode;
+import com.jumper.model.Pos;
+import com.jumper.model.View;
 import nme.display.Sprite;
 import nme.Lib;
 

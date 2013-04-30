@@ -4,7 +4,7 @@ package com.jumper;
 import com.jumper.model.Collider;
 import com.jumper.model.Movement;
 import com.jumper.model.View;
-import model.Pos;
+import com.jumper.model.Pos;
 import nme.Assets;
 import nme.display.Bitmap;
 import nme.display.MovieClip;
@@ -13,8 +13,8 @@ import nme.display.StageAlign;
 import nme.display.StageScaleMode;
 import nme.events.Event;
 import nme.Lib;
-import mutator.Scene;
-import pools.VectorPool;
+import com.jumper.mutator.Scene;
+import com.jumper.pools.VectorPool;
 
 
 /**

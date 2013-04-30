@@ -1,8 +1,8 @@
 package com.jumper.level;
 
 
-import maths.Vector2;
-import geom.AABB;
+import com.jumper.maths.Vector2;
+import com.jumper.geom.AABB;
 import nme.Assets;
 
 /**

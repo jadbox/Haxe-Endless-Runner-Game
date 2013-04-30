@@ -1,17 +1,17 @@
 package com.jumper;
 
 	
-	import model.Pos;
+	import com.jumper.model.Pos;
 	import nme.display.MovieClip;
 	import nme.events.MouseEvent;
-	import geom.IAABB;
-	import maths.Vector2;
+	import com.jumper.geom.IAABB;
+	import com.jumper.maths.Vector2;
 	import nme.geom.Matrix;
-	import pools.VectorPool;
-	import pools.Pool;
-	import geom.AABB;
-	import geom.IAABB;
-	import maths.Scalar;
+	import com.jumper.pools.VectorPool;
+	import com.jumper.pools.Pool;
+	import com.jumper.geom.AABB;
+	import com.jumper.geom.IAABB;
+	import com.jumper.maths.Scalar;
 	
 	class Camera
 	{

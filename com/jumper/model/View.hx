@@ -2,8 +2,8 @@ package com.jumper.model;
 import nme.display.Bitmap;
 import nme.display.Sprite;
 import nme.installer.Assets;
-import promhx.Promise;
-import promhx.Promise;
+import com.jumper.promhx.Promise;
+import com.jumper.promhx.Promise;
 
 /**
  * ...

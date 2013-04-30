@@ -1,17 +1,21 @@
 package com.jumper;
-import model.Pos;
-import model.View;
-import mutator.Collision;
-import mutator.PlayerMove;
-import mutator.Scene;
-import nme.display.Sprite;
-import mutator.Move;
-import level.Map;
+
 import nme.display.MovieClip;
 import nme.display.Graphics;
-import maths.Vector2;
-import level.TileTypes;
-import pools.VectorPool;
+import nme.display.Sprite;
+
+import com.jumper.model.Pos;
+import com.jumper.model.View;
+import com.jumper.mutator.Collision;
+import com.jumper.mutator.PlayerMove;
+import com.jumper.mutator.Scene;
+
+import com.jumper.mutator.Move;
+import com.jumper.level.Map;
+
+import com.jumper.maths.Vector2;
+import com.jumper.level.TileTypes;
+import com.jumper.pools.VectorPool;
 
 /**
  * ...

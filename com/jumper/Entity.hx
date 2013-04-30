@@ -1,8 +1,8 @@
 package com.jumper;
-import model.Movement;
-import model.Pos;
-import model.View;
-import promhx.Promise;
+import com.jumper.model.Movement;
+import com.jumper.model.Pos;
+import com.jumper.model.View;
+import com.jumper.promhx.Promise;
 /**
  * ...
  * @author Jonathan Dunlap

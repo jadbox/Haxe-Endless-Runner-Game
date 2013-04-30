@@ -1,12 +1,12 @@
 package com.jumper.mutator;
 
-import geom.AABB;
-import maths.Vector2;
-import mutator.Move;
+import com.jumper.geom.AABB;
+import com.jumper.maths.Vector2;
+import com.jumper.mutator.Move;
 import nme.display.Sprite;
 import nme.ui.Keyboard;
-import maths.Scalar;
-import level.Map;
+import com.jumper.maths.Scalar;
+import com.jumper.level.Map;
 
 class PlayerMove extends Move
 {

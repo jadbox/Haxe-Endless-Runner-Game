@@ -1,14 +1,14 @@
 package com.jumper;
 
 import nme.display.MovieClip;
-import maths.Vector2;
-import level.Map;
-import geom.IAABB;
-import geom.AABB;
-import geom.ICircle;
-import geom.Contact;
-import geom.Collide;
-import EpicGameJam;
+import com.jumper.maths.Vector2;
+import com.jumper.level.Map;
+import com.jumper.geom.IAABB;
+import com.jumper.geom.AABB;
+import com.jumper.geom.ICircle;
+import com.jumper.geom.Contact;
+import com.jumper.geom.Collide;
+import com.jumper.EpicGameJam;
 
 
 class MoveableObject extends MovieClip, implements IAABB, implements ICircle

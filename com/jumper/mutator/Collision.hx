@@ -1,11 +1,11 @@
 package com.jumper.mutator;
-import model.CollisionNode;
-import model.Movement;
-import model.MoveNode;
-import model.Pos;
+import com.jumper.model.CollisionNode;
+import com.jumper.model.Movement;
+import com.jumper.model.MoveNode;
+import com.jumper.model.Pos;
 import nme.errors.Error;
-import model.View;
-import model.Collider;
+import com.jumper.model.View;
+import com.jumper.model.Collider;
 
 /**
  * ...

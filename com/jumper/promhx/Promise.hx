@@ -11,7 +11,7 @@
 * 
 ****/
 
-package promhx;
+package com.jumper.promhx;
 #if macro
 import haxe.macro.Expr;
 import tink.macro.tools.ExprTools;

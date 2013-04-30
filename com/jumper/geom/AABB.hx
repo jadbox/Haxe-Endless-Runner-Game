@@ -1,7 +1,7 @@
-package geom;
+package com.jumper.geom;
 
-import maths.Vector2;
-import maths.Scalar;
+import com.jumper.maths.Vector2;
+import com.jumper.maths.Scalar;
 
 class AABB implements IAABB
 {

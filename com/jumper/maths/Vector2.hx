@@ -1,7 +1,7 @@
 ﻿package com.jumper.maths;
 
 	import nme.geom.Point;
-	import Constants;
+	import com.jumper.Constants;
 	
 	/**
 	 * ...

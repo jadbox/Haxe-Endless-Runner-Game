@@ -1,15 +1,15 @@
 package com.jumper.mutator;
 
-import geom.AABB;
-import model.Movement;
-import model.MoveNode;
-import model.Pos;
+import com.jumper.geom.AABB;
+import com.jumper.model.Movement;
+import com.jumper.model.MoveNode;
+import com.jumper.model.Pos;
 import nme.errors.Error;
-import maths.Vector2;
-import level.Map;
-import geom.Contact;
-import geom.Collide;
-import geom.IAABB;
+import com.jumper.maths.Vector2;
+import com.jumper.level.Map;
+import com.jumper.geom.Contact;
+import com.jumper.geom.Collide;
+import com.jumper.geom.IAABB;
 
 /**
  * ...
