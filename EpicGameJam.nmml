@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<meta title="EpicGameJam" package="" version="1.0.0" company="Jonathan Dunlap" />
-	<app path="Export" file="EpicGameJam" main="EpicGameJam" />
+	<meta title="EpicGameJam" package="com.jumper" version="1.0.0" company="Jonathan Dunlap" />
+	<app path="Export" file="EpicGameJam" main="com.jumper.EpicGameJam" />
 	
 	<window width="640" height="320" background="0xFFFFFF" fps="30" />
 	<window width="640" height="320" if="desktop" />
