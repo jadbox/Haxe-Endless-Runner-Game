@@ -26,6 +26,8 @@ class TouchInput
     
     var tapped:Bool = false;
     public var tapListeners:Array < Void->Void > ;
+	
+	public var swipeListeners:Array< String->Void >;
 
 	public function new(worldDisplay:Stage) 
 	{
@@ -46,6 +48,7 @@ class TouchInput
         lastPos = new Vector2();
         
         tapListeners = new Array < Void->Void > ();
+		swipeListeners = new Array < String->Void > ();
 	}
 	
 	function touchBegin(touchBeginEvent:TouchEvent):Void
@@ -87,12 +90,30 @@ class TouchInput
     
     public function mouseUp(e:MouseEvent):Void
     {
-        curAngle = lastPos.Sub(new Vector2(e.stageX, e.stageY)).ToAngle();
-        trace("mup " + e.stageX + " , " + e.stageY);
-        if (curAngle < Math.PI / 4 || curAngle > Math.PI * .75)
+		var deltaX = e.stageX - lastPos.m_x;
+		var deltaY = e.stageY - lastPos.m_y;
+		var radRotation = Math.atan2(deltaY, deltaX);
+		if (radRotation < 0) radRotation += Constants.kTwoPi;
+		curAngle = radRotation;
+        //curAngle = lastPos.Sub(new Vector2(e.stageX, e.stageY)).ToAngle();
+        trace("mup " + e.stageX + " , " + e.stageY + " curAngle: " + curAngle);
+		var absDeltaX = Math.abs(deltaX);
+		var absDeltaY = Math.abs(deltaY);
+        if (absDeltaX + absDeltaY < 40)
         {
             for (lstn in tapListeners) lstn();
-        }
+        }else {
+			for (lstn in swipeListeners) {
+				if (absDeltaX > absDeltaY) {
+					if (deltaX > 0) lstn("right");
+					else lstn("left");
+				}else {
+					if (deltaY > 0) lstn("down");
+					else lstn("up");
+				}
+			}
+		}
+		
     }
 	
 	public function getKeyDown(keyCode:Int):Bool

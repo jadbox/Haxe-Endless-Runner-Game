@@ -36,6 +36,8 @@ class PlayerMove extends Move
     
     private var tapped:Bool = false;
 	
+	private var swipes:Array<String>;
+	
 	public function new(map:Map, parent:EpicGameJam) 
 	{
 		super(map, parent);
@@ -50,6 +52,13 @@ class PlayerMove extends Move
         m_touch = EpicGameJam.touchInput;
         m_touch.tapListeners.push(handleTap);
         
+		swipes = new Array<String>();
+		m_touch.swipeListeners.push(handleSwipe);
+	}
+	
+	function handleSwipe(dir:String):Void
+	{
+		swipes.push(dir);
 	}
     
     function handleTap():Void
@@ -101,18 +110,32 @@ class PlayerMove extends Move
         moveSpeed = currentPos.onGround ? kWalkSpeed : kWalkSpeed / 2;
         
         m_velTarget.Clear();
-		
-		//standard walking controls
+		var pi = Math.PI;
+		//angle controls
         //LEFT
-        if (m_touch.getCurAngle() > 0 && m_touch.getCurAngle() < Math.PI/2) {
+        /*if (m_touch.getCurAngle() >= pi/2 && m_touch.getCurAngle() <= pi) {
             currentPos.vel.m_x -= moveSpeed;
 			m_tryToMove = true;
         }
         //RIGHT
-        if (m_touch.getCurAngle() > Constants.kTwoPi) {
-            currentPos.vel.m_x -= moveSpeed;
+        if (m_touch.getCurAngle() > 0 && m_touch.getCurAngle() < pi/2) {
+            currentPos.vel.m_x += moveSpeed;
 			m_tryToMove = true;
-        }
+        }*/
+		//direction controls
+		while (swipes.length > 0) {
+			switch(swipes.pop()) {
+				case "left":
+					currentPos.vel.m_x -= moveSpeed;
+					m_tryToMove = true;
+				case "right":
+					currentPos.vel.m_x -= moveSpeed;
+					m_tryToMove = true;
+				case "up":
+				case "down":
+				default:
+			}
+		}
         if (tapped) {
             if (currentPos.onGround)
                 currentPos.vel.m_y -= kPlayerJumpVel;
