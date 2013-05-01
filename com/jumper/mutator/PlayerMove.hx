@@ -3,10 +3,13 @@ package com.jumper.mutator;
 import com.jumper.geom.AABB;
 import com.jumper.maths.Vector2;
 import com.jumper.mutator.Move;
+import com.jumper.TouchInput;
 import nme.display.Sprite;
 import nme.ui.Keyboard;
 import com.jumper.maths.Scalar;
 import com.jumper.level.Map;
+import com.jumper.EpicGameJam;
+import com.jumper.Constants;
 
 class PlayerMove extends Move
 {
@@ -22,12 +25,16 @@ class PlayerMove extends Move
 	
 	private var m_velTarget:Vector2;
 	private var m_keyboard:KeyboardInput;
+    
+    private var m_touch:TouchInput;
 	
 	private var m_tileAABB:AABB;
 	
 	private var m_hurtTimer:Int;
 	private var m_tryToMove:Bool;
 	private var m_flyMode:Bool;
+    
+    private var tapped:Bool = false;
 	
 	public function new(map:Map, parent:EpicGameJam) 
 	{
@@ -39,7 +46,16 @@ class PlayerMove extends Move
 		m_tileAABB = new AABB();
 		m_velTarget = new Vector2();
 		m_keyboard = EpicGameJam.keyInput;
+
+        m_touch = EpicGameJam.touchInput;
+        m_touch.tapListeners.push(handleTap);
+        
 	}
+    
+    function handleTap():Void
+    {
+        tapped = true;
+    }
 	
 	public function MakeTemporaryilyInvunerable( ):Void
 	{
@@ -53,7 +69,8 @@ class PlayerMove extends Move
 	
 	override function processMove(time:Float):Void
 	{
-		keyboardControl(time);
+        touchControl(time);
+		//keyboardControl(time);
 		//integrate velocity
 		if (m_flyMode)
 		{
@@ -76,6 +93,32 @@ class PlayerMove extends Move
 			m_hurtTimer--;
 		}
 	}
+    
+    function touchControl(time:Float):Void
+    {
+        m_tryToMove = false;
+        var moveSpeed:Float = 0;
+        moveSpeed = currentPos.onGround ? kWalkSpeed : kWalkSpeed / 2;
+        
+        m_velTarget.Clear();
+		
+		//standard walking controls
+        //LEFT
+        if (m_touch.getCurAngle() > 0 && m_touch.getCurAngle() < Math.PI/2) {
+            currentPos.vel.m_x -= moveSpeed;
+			m_tryToMove = true;
+        }
+        //RIGHT
+        if (m_touch.getCurAngle() > Constants.kTwoPi) {
+            currentPos.vel.m_x -= moveSpeed;
+			m_tryToMove = true;
+        }
+        if (tapped) {
+            if (currentPos.onGround)
+                currentPos.vel.m_y -= kPlayerJumpVel;
+        }
+        tapped = false;
+    }
 	
 	function keyboardControl(time:Float):Void
 	{
@@ -90,6 +133,23 @@ class PlayerMove extends Move
 		m_velTarget.Clear();
 		
 		//standard walking controls
+        #if android
+        //LEFT
+        if (m_touch.getCurAngle() > 0 && m_touch.getCurAngle() < Constants.kTwoPi) {
+            currentPos.vel.m_x -= moveSpeed;
+			m_tryToMove = true;
+        }
+        //RIGHT
+        if (m_touch.getCurAngle() > Constants.kTwoPi) {
+            currentPos.vel.m_x -= moveSpeed;
+			m_tryToMove = true;
+        }
+        if (tapped) {
+            if (currentPos.onGround)
+                currentPos.vel.m_y -= kPlayerJumpVel;
+        }
+        tapped = false;
+        #else
 		if (m_keyboard.getKeyDown(Keyboard.LEFT))
 		{
 			currentPos.vel.m_x -= moveSpeed;
@@ -104,6 +164,7 @@ class PlayerMove extends Move
 			//face right
 			//this.scaleX = 1;
 		}
+        #end
 		if (m_flyMode)
 		{
 			if (m_keyboard.getKeyDown(Keyboard.UP))
