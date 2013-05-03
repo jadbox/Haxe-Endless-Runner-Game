@@ -38,6 +38,8 @@ class PlayerMove extends Move
 	
 	private var swipes:Array<String>;
 	
+	private var direction:String = "none";
+	
 	public function new(map:Map, parent:EpicGameJam) 
 	{
 		super(map, parent);
@@ -58,7 +60,8 @@ class PlayerMove extends Move
 	
 	function handleSwipe(dir:String):Void
 	{
-		swipes.push(dir);
+		//swipes.push(dir);
+		direction = dir;
 	}
     
     function handleTap():Void
@@ -123,7 +126,7 @@ class PlayerMove extends Move
 			m_tryToMove = true;
         }*/
 		//direction controls
-		while (swipes.length > 0) {
+		/*while (swipes.length > 0) {
 			switch(swipes.pop()) {
 				case "left":
 					currentPos.vel.m_x -= moveSpeed;
@@ -135,6 +138,14 @@ class PlayerMove extends Move
 				case "down":
 				default:
 			}
+		}*/
+		switch(direction) {
+			case "left":
+				currentPos.vel.m_x -= moveSpeed;
+				m_tryToMove = true;
+			case "right":
+				currentPos.vel.m_x += moveSpeed;
+				m_tryToMove = true;	
 		}
         if (tapped) {
             if (currentPos.onGround)

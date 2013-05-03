@@ -5,6 +5,7 @@ import com.jumper.maths.Vector2;
 import com.jumper.level.TileTypes;
 import com.jumper.model.Pos;
 import com.jumper.maths.Vector2;
+import nme.display.Bitmap;
 import nme.display.MovieClip;
 import nme.display.Sprite;
 import com.jumper.model.View;
@@ -76,6 +77,9 @@ class LevelBuilder
 					playerSprite.x -= Constants.kPlayerWidth / 2;
 					playerSprite.y -= Constants.kPlayerWidth / 2;
 					playerView.addChild(playerSprite);
+					var charBmp:Bitmap = new Bitmap(Assets.getBitmapData("assets/uglyduck.png"));
+					playerSprite.addChild(charBmp);
+					charBmp.y -= charBmp.height / 2;
 					
 					gameEngine.playerMovement.add(gameEngine.player);
 					gameEngine.scene.add(gameEngine.player);
