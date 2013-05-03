@@ -16,5 +16,6 @@ class Constants
 	static public var kExpand:Vector2 = new Vector2(5,5);
 	static public var kPlaneHeight:Float = 12;
 	static public var kPlayerWidth:Int = 10;
+	static public var kPlayerHeight:Int = 18;
 }
 

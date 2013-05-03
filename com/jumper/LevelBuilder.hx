@@ -73,13 +73,13 @@ class LevelBuilder
 					var playerSprite:Sprite = new Sprite();
 					gameEngine.player.set([playerPos, playerView]);
 					playerSprite.graphics.beginFill(0x00ff00);
-					playerSprite.graphics.drawRect(0, 0, Constants.kPlayerWidth, Constants.kPlayerWidth);
+					playerSprite.graphics.drawRect(0, 0, Constants.kPlayerWidth, Constants.kPlayerHeight);
 					playerSprite.x -= Constants.kPlayerWidth / 2;
-					playerSprite.y -= Constants.kPlayerWidth / 2;
+					playerSprite.y -= Constants.kPlayerHeight / 2;
 					playerView.addChild(playerSprite);
-					var charBmp:Bitmap = new Bitmap(Assets.getBitmapData("assets/uglyduck.png"));
-					playerSprite.addChild(charBmp);
-					charBmp.y -= charBmp.height / 2;
+					//var charBmp:Bitmap = new Bitmap(Assets.getBitmapData("assets/uglyduck.png"));
+					//playerSprite.addChild(charBmp);
+					//charBmp.y -= charBmp.height / 2;
 					
 					gameEngine.playerMovement.add(gameEngine.player);
 					gameEngine.scene.add(gameEngine.player);

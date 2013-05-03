@@ -1,5 +1,6 @@
 package com.jumper;
 
+import com.jumper.mutator.EnemyMove;
 import nme.display.MovieClip;
 import nme.display.Graphics;
 import nme.display.Sprite;
@@ -28,6 +29,7 @@ class Engine extends MovieClip
 	public var scene:Scene;
 	public var movement:Move;
 	public var playerMovement:PlayerMove;
+	public var enemyMovement:EnemyMove;
 	public var collision:Collision;
 	
 	public var map:Map;

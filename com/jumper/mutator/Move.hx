@@ -51,7 +51,7 @@ class Move implements ISystem, implements IAABB
 	public function add(entity:Entity):Void {
 		var pos:Pos = entity.fetch(Pos);
 		pos.radius = Constants.kPlayerWidth / 2;
-		pos.halfExtents = new Vector2( pos.radius, pos.radius );
+		pos.halfExtents = new Vector2( pos.radius, Constants.kPlayerHeight / 2 );
 		posList.push(pos);
 		
 	}

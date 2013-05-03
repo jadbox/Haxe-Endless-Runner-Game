@@ -7,7 +7,7 @@ import nme.ui.Keyboard;
 import maths.Scalar;
 import level.Map;
 
-class PlayerMove extends Move
+class EnemyMove extends Move
 {
 	//how high does player jump?
 	private static var kPlayerJumpVel:Float = 900 * 1.2;
