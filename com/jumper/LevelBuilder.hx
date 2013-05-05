@@ -77,8 +77,8 @@ class LevelBuilder
 					playerSprite.x -= Constants.kPlayerWidth / 2;
 					playerSprite.y -= Constants.kPlayerHeight / 2;
 					playerView.addChild(playerSprite);
-					//var charBmp:Bitmap = new Bitmap(Assets.getBitmapData("assets/uglyduck.png"));
-					//playerSprite.addChild(charBmp);
+					var charBmp:Bitmap = new Bitmap(Assets.getBitmapData("assets/uglyduck.png"));
+					playerSprite.addChild(charBmp);
 					//charBmp.y -= charBmp.height / 2;
 					
 					gameEngine.playerMovement.add(gameEngine.player);
@@ -97,6 +97,20 @@ class LevelBuilder
 				case TileTypes.kEnemy:
 					var enemy:Entity = new Entity();
 					gameEngine.addEntity(enemy);
+					var enemyPos:Pos = new Pos();
+					enemyPos.pos = tilePos;
+					var enemyView:View = new View();
+					var enemySprite:Sprite = new Sprite();
+					enemy.set([enemyPos, enemyView]);
+					enemySprite.graphics.beginFill(0xffff00);
+					enemySprite.graphics.drawRect(0, 0, 16, 16);
+					enemySprite.x -= 8;
+					enemySprite.y -= 8;
+					enemyView.addChild(enemySprite);
+					
+					gameEngine.enemyMovement.add(enemy);
+					gameEngine.scene.add(enemy);
+					
 				default: Util.Assert( false, "Unexpected tile code " + tileCode );
 			}
 			

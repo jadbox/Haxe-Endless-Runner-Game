@@ -83,9 +83,16 @@ class Map
 		//trace(level);
 		trace(level.elements().next() );
 		trace(level.elements().next().elements().next().firstChild().nodeValue);
-		var playerNode:Xml = level.elements().next().elementsNamed("entity").next().elementsNamed("player").next();
+		var entityNode:Xml = level.elements().next().elementsNamed("entity").next();
+		var playerNode:Xml = entityNode.elementsNamed("player").next();
 		
-		var playerPos:Int = ogmoXYToArraySpace(Std.parseInt(playerNode.get("x")),Std.parseInt(playerNode.get("y")));
+		
+		var playerPos:Int = ogmoXYToArraySpace(Std.parseInt(playerNode.get("x")), Std.parseInt(playerNode.get("y")));
+		
+		var enemyPositions:Array<Int> = new Array<Int>();
+		for ( enemyNode in entityNode.elementsNamed("enemy")) {
+			enemyPositions.push(ogmoXYToArraySpace(Std.parseInt(enemyNode.get("x")), Std.parseInt(enemyNode.get("y"))));
+		}
 		
 		trace(level.elements().next().elementsNamed("entity").next().elements().next().get("x"));
 		var level:String = level.elements().next().elements().next().firstChild().nodeValue;
@@ -98,6 +105,8 @@ class Map
 		}
 		trace("playerPos: " + playerPos + "in level array: " + levelArray[playerPos]);
 		levelArray[playerPos] = 2;
+		for (en in enemyPositions) levelArray[en] = 3;
+		//loop through enemy Pos
 		return levelArray;
 	}
 	

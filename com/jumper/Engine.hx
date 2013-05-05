@@ -52,7 +52,7 @@ class Engine extends MovieClip
 		entities = new Array<Entity>();
 		
 		addSystem(scene = new Scene(this));
-		//addSystem(movement = new Move(map, EpicGameJam.gameJam));
+		addSystem(enemyMovement = new EnemyMove(map, EpicGameJam.gameJam));
 		addSystem(playerMovement = new PlayerMove(map, EpicGameJam.gameJam));
 		addSystem(collision = new Collision());
 		

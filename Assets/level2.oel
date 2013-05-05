@@ -16,5 +16,8 @@
 11111111111111111111</collision>
   <entity>
     <player id="0" x="48" y="208" />
+    <enemy id="1" x="192" y="208" />
+    <enemy id="2" x="128" y="128" />
+    <enemy id="3" x="192" y="80" />
   </entity>
 </level>
