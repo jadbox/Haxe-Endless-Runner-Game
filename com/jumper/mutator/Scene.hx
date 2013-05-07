@@ -50,6 +50,8 @@ class Scene implements ISystem
 			var view = viewList[current];
 			view.x = pos.pos.m_x;
 			view.y = pos.pos.m_y;
+			view.scaleX = (pos.vel.m_x < 0) ? -1 : 1;
+			
 			current++;
 		}
 	}

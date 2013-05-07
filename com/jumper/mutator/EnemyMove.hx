@@ -6,6 +6,7 @@ import com.jumper.mutator.Move;
 import nme.ui.Keyboard;
 import com.jumper.maths.Scalar;
 import com.jumper.level.Map;
+import com.jumper.Constants;
 
 class EnemyMove extends Move
 {
@@ -17,7 +18,7 @@ class EnemyMove extends Move
 	//1 in one frame, 0 in never
 	private static var kReachTargetScale:Float = 0.7;
 	//how fast the player walks
-	private static var kWalkSpeed:Float = 80;
+	private static var kWalkSpeed:Float = 15;
 	
 	private var m_velTarget:Vector2;
 	
@@ -44,8 +45,8 @@ class EnemyMove extends Move
 		//propels y by gravity
 		currentPos.vel.AddYTo(Constants.kGravity);
 		//clamp speed
-		currentPos.vel.m_x = Scalar.Clamp(currentPos.vel.m_x, -Constants.kMaxSpeed, Constants.kMaxSpeed);
-		currentPos.vel.m_y = Math.min(currentPos.vel.m_y, Constants.kMaxSpeed * 2);
+		currentPos.vel.m_x = Scalar.Clamp(currentPos.vel.m_x, -Constants.maxEnemySpeed, Constants.maxEnemySpeed);
+		currentPos.vel.m_y = Math.min(currentPos.vel.m_y, Constants.maxEnemySpeed * 2);
 		//carry out move
 		super.processMove(time);
 	}
@@ -53,7 +54,7 @@ class EnemyMove extends Move
 	function badguyShuffle(time:Float):Void
 	{
 		timeBeforeDirChange += time;
-		if (timeBeforeDirChange > 16.5) {
+		if (timeBeforeDirChange > 26.5) {
 			timeBeforeDirChange = 0;
 			currentDir = (currentDir == "left") ? "right" : "left";
 		}

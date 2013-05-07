@@ -102,11 +102,17 @@ class LevelBuilder
 					var enemyView:View = new View();
 					var enemySprite:Sprite = new Sprite();
 					enemy.set([enemyPos, enemyView]);
-					enemySprite.graphics.beginFill(0xffff00);
-					enemySprite.graphics.drawRect(0, 0, 16, 16);
-					enemySprite.x -= 8;
-					enemySprite.y -= 8;
+					enemySprite.graphics.beginFill(0xffff00, 0);
+					enemySprite.graphics.drawRect(0, 0, Constants.enemyWidth, Constants.enemyHeight);
+					enemySprite.x -= Constants.enemyWidth/2;
+					enemySprite.y -= Constants.enemyHeight/2;
 					enemyView.addChild(enemySprite);
+					
+					var enemyBmp:Bitmap = new Bitmap(Assets.getBitmapData("assets/angryRadishSmall.png"));
+					//enemyBmp.scaleX = enemyBmp.scaleY = .12;
+					enemyBmp.x = enemySprite.width / 2 - enemyBmp.width / 2;
+					enemySprite.addChild(enemyBmp);
+					
 					
 					gameEngine.enemyMovement.add(enemy);
 					gameEngine.scene.add(enemy);

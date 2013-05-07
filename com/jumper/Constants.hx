@@ -17,5 +17,9 @@ class Constants
 	static public var kPlaneHeight:Float = 12;
 	static public var kPlayerWidth:Int = 20;
 	static public var kPlayerHeight:Int = 26;
+	
+	static public var maxEnemySpeed:Float = 30;
+	static public var enemyWidth:Int = 60;
+	static public var enemyHeight:Int = 58;
 }
 
