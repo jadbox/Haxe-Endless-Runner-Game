@@ -7,6 +7,8 @@ import nme.ui.Keyboard;
 import com.jumper.maths.Scalar;
 import com.jumper.level.Map;
 import com.jumper.Constants;
+import com.jumper.Entity;
+import com.jumper.model.Pos;
 
 class EnemyMove extends Move
 {
@@ -54,7 +56,7 @@ class EnemyMove extends Move
 	function badguyShuffle(time:Float):Void
 	{
 		timeBeforeDirChange += time;
-		if (timeBeforeDirChange > 26.5) {
+		if (timeBeforeDirChange > 2.5) {
 			timeBeforeDirChange = 0;
 			currentDir = (currentDir == "left") ? "right" : "left";
 		}

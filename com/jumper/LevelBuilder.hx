@@ -68,6 +68,8 @@ class LevelBuilder
 					if(block == 0){
 					gameEngine.addEntity(gameEngine.player = new Entity());
 					var playerPos:Pos = new Pos();
+					//set up the size of a Pos model
+					playerPos.setExtents(Constants.kPlayerWidth, Constants.kPlayerHeight);
 					playerPos.pos = tilePos;
 					var playerView:View = new View();
 					var playerSprite:Sprite = new Sprite();
@@ -96,22 +98,24 @@ class LevelBuilder
 				}
 				case TileTypes.kEnemy:
 					var enemy:Entity = new Entity();
+					enemy.id = TileTypes.kEnemy;
 					gameEngine.addEntity(enemy);
 					var enemyPos:Pos = new Pos();
 					enemyPos.pos = tilePos;
+					enemyPos.setExtents(Constants.enemyWidth, Constants.enemyHeight);
 					var enemyView:View = new View();
 					var enemySprite:Sprite = new Sprite();
 					enemy.set([enemyPos, enemyView]);
-					enemySprite.graphics.beginFill(0xffff00, 0);
+					enemySprite.graphics.beginFill(0xffff00, .6);
 					enemySprite.graphics.drawRect(0, 0, Constants.enemyWidth, Constants.enemyHeight);
 					enemySprite.x -= Constants.enemyWidth/2;
 					enemySprite.y -= Constants.enemyHeight/2;
 					enemyView.addChild(enemySprite);
 					
-					var enemyBmp:Bitmap = new Bitmap(Assets.getBitmapData("assets/angryRadishSmall.png"));
+					//var enemyBmp:Bitmap = new Bitmap(Assets.getBitmapData("assets/angryRadishSmall.png"));
 					//enemyBmp.scaleX = enemyBmp.scaleY = .12;
-					enemyBmp.x = enemySprite.width / 2 - enemyBmp.width / 2;
-					enemySprite.addChild(enemyBmp);
+					//enemyBmp.x = enemySprite.width / 2 - enemyBmp.width / 2;
+					//enemySprite.addChild(enemyBmp);
 					
 					
 					gameEngine.enemyMovement.add(enemy);

@@ -10,6 +10,7 @@ import com.jumper.level.Map;
 import com.jumper.geom.Contact;
 import com.jumper.geom.Collide;
 import com.jumper.geom.IAABB;
+import com.jumper.level.TileTypes;
 
 /**
  * ...
@@ -50,8 +51,8 @@ class Move implements ISystem, implements IAABB
 	}
 	public function add(entity:Entity):Void {
 		var pos:Pos = entity.fetch(Pos);
-		pos.radius = Constants.kPlayerWidth / 2;
-		pos.halfExtents = new Vector2( pos.radius, Constants.kPlayerHeight / 2 );
+		//pos.radius = Constants.kPlayerWidth / 2;
+		//pos.halfExtents = new Vector2( pos.radius, Constants.kPlayerHeight / 2 );
 		posList.push(pos);
 		
 	}
@@ -59,10 +60,6 @@ class Move implements ISystem, implements IAABB
 	public function update(time:Float):Void {
 		currentEntity = 0;
 		while (currentEntity < posList.length) {
-			//var pos  = posList[current];
-			//var movement = moveList[current];
-			//pos.x += movement.x;
-			//pos.y += movement.y;
 			currentPos = posList[currentEntity];
 			processMove(time);
 			currentEntity++;
@@ -114,11 +111,11 @@ class Move implements ISystem, implements IAABB
 		
 		//post collision
 	}
-	
+	//tileAabb is the AABB(boundaries) of the tile
 	function innerCollide(tileAabb:AABB, tileType:Int, time:Float, i:Int, j:Int):Void
 	{
 		// is it collidable?
-		if ( Map.IsTileObstacle( tileType ) )
+		if ( Map.IsTileObstacle( tileType ))
 		{
 			// standard collision responce
 			//trace("tileAabb: " + tileAabb + ", m_contact: " + m_contact);
@@ -128,6 +125,7 @@ class Move implements ISystem, implements IAABB
 				collisionResponse( m_contact.m_normal, m_contact.m_dist, time );
 			}
 		}
+		
 	}
 	//implementing IAABB
 	public function getCentre():Vector2

@@ -27,7 +27,7 @@ package com.jumper.geom;
 		/// <summary>
 		/// Returns information about distance and direction from point to AABB
 		/// </summary>
-		static public function AabbVsAabbInternal( delta:Vector2, aabbCentre:Vector2, aabbHalfExtents:Vector2, point:Vector2, outContact:Contact ):Bool
+		static inline public function AabbVsAabbInternal( delta:Vector2, aabbCentre:Vector2, aabbHalfExtents:Vector2, point:Vector2, outContact:Contact ):Bool
 		{
 			// form the closest plane to the point
 			var planeN:Vector2 = delta.m_MajorAxis.NegTo();
@@ -48,7 +48,7 @@ package com.jumper.geom;
 		}
 		
 		/// <summary>
-		/// 
+		/// do these bounding boxes overlap
 		/// </summary>
 		static public function AabbVsAabb( a:IAABB, b:IAABB, outContact:Contact, tileI:Int, tileJ:Int, map:Map, checkInternal:Bool=true ):Bool
 		{

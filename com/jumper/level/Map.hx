@@ -4,6 +4,7 @@ package com.jumper.level;
 import com.jumper.maths.Vector2;
 import com.jumper.geom.AABB;
 import nme.Assets;
+import com.jumper.Entity;
 
 /**
  * ...
@@ -23,7 +24,7 @@ class Map
 		
 	// map for the level
 	public var mapBlocks:Array<Array<Int>>;
-	public var m_map(default,null):Array<Int>;
+	public var m_map(default, null):Array<Int>;
 	
 
 	public function new(platformer:Engine) 
@@ -51,17 +52,19 @@ class Map
 			1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 			
 		];*/
-		
-		
-		m_map = parseLevel();
-		
 		mapBlocks = new Array<Array<Int>>();
-		for (i in 0...5) {
+		
+		m_map = parseLevel("assets/level3.oel");
+		mapBlocks.push(m_map.slice(0, m_map.length));
+		m_map = parseLevel("assets/level4.oel");
+		
+		
+		for (i in 0...4) {
 			mapBlocks.push(m_map.slice(0, m_map.length));
 		}
 		//var map2:Array<Int> = m_map.slice(0, m_map.length - 1);
 		m_Platformer = platformer;
-		trace(m_map.length);
+		//trace(m_map.length);
 		Util.Assert(m_map.length == m_Width * m_Height, "Map Dimensions don't match constants!");
 		m_aabbTemp = new AABB();
 		
@@ -75,9 +78,9 @@ class Map
 		return Math.floor((x / Constants.kTileSize) + ((y / Constants.kTileSize) * m_Width));
 	}
 	
-	function parseLevel():Array<Int>
+	function parseLevel(levelString:String):Array<Int>
 	{
-		var levelRaw:String = Assets.getText("assets/level2.oel");
+		var levelRaw:String = Assets.getText(levelString);
 		//trace("level: " + levelRaw);
 		var level:Xml = Xml.parse(levelRaw);
 		//trace(level);
@@ -181,7 +184,7 @@ class Map
 	/// </summary>
 	static public function IsTileObstacle( tile:Int ):Bool
 	{
-		return cast(tile, Int) == TileTypes.kPlatform;
+		return tile == TileTypes.kPlatform;
 	}
 	
 	/// <summary>

@@ -19,13 +19,20 @@ class Pos
 	public var onGround:Bool;
 	public var onGroundLast:Bool;
 	
-	public function new() 
+	public function new(width:Float = 0, height:Float = 0) 
 	{
 		pos = new Vector2();
 		posCorrect = new Vector2();
 		vel = new Vector2();
-		radius = Constants.kPlayerWidth / 2;
+		radius = Constants.kTileSize;
 		halfExtents = new Vector2();
+		
+	}
+	
+	public function setExtents(width:Float, height:Float):Void
+	{
+		radius = width / 2;
+		halfExtents = new Vector2(radius, height/2);
 	}
 	
 }

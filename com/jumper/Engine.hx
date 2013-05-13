@@ -18,6 +18,8 @@ import com.jumper.maths.Vector2;
 import com.jumper.level.TileTypes;
 import com.jumper.pools.VectorPool;
 
+using Lambda;
+
 /**
  * ...
  * @author Jonathan Dunlap
@@ -41,6 +43,8 @@ class Engine extends MovieClip
 	private var m_player:MoveableObject;
 	private var m_camera:Camera;
 	
+	
+	
 	public function new() 
 	{
 		super();
@@ -50,6 +54,8 @@ class Engine extends MovieClip
 		
 		systems = new Array<ISystem>();
 		entities = new Array<Entity>();
+		//we will refactor this
+		//enemies = new Array<Entity>();
 		
 		addSystem(scene = new Scene(this));
 		addSystem(enemyMovement = new EnemyMove(map, EpicGameJam.gameJam));
@@ -76,6 +82,14 @@ class Engine extends MovieClip
 	/*public function removeEntity(entity:Entity):Void {
 		
 	}*/
+	
+	public function getEntitiesById(entityId:Int):Array<Entity>
+	{
+		return entities.filter(function(e:Entity):Bool {
+			if (e.id == entityId) return true;
+			return false;
+		}).array();
+	}
 	public function update(time:Float):Void {
 		for (s in systems) s.update(time);
 		//m_player.Update(time);

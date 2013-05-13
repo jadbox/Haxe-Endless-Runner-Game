@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <OgmoVersion>2.1.0.5</OgmoVersion>
-  <Name>New Project</Name>
+  <OgmoVersion>2.1.0.6</OgmoVersion>
+  <Name>platformer</Name>
   <BackgroundColor A="255" R="125" G="160" B="255" />
   <GridColor A="255" R="255" G="240" B="90" />
   <LevelDefaultSize>
@@ -16,7 +16,7 @@
     <Width>640</Width>
     <Height>480</Height>
   </LevelMaximumSize>
-  <Filename>C:\Users\Greg\Documents\GitHub\EpicGameJam\ogmo\platformMap.oep</Filename>
+  <Filename>C:\Users\greg\Documents\GitHub\EpicGameJam\ogmo\platformMap.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>

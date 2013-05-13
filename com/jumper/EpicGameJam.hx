@@ -30,6 +30,8 @@ class EpicGameJam extends Sprite {
 	
 	static public var gameJam:EpicGameJam;
 	
+	static public var engine:Engine;
+	
 	public function new () {
 		
 		super ();
@@ -45,18 +47,17 @@ class EpicGameJam extends Sprite {
 		keyInput = new KeyboardInput(Lib.current.stage);
         
         touchInput = new com.jumper.TouchInput(Lib.current.stage);
-        
 		
 		m_gTempVectorPool = new VectorPool(1000);
 		
-		var game:Engine = new Engine();
-		addChild(game);
+		engine = new Engine();
+		addChild(engine);
 		
 		trace("screen size: " + Lib.current.stage.stageWidth + ", " + Lib.current.stage.stageHeight);
 		
 		
 		addEventListener(Event.ENTER_FRAME, function(e):Void {
-			game.update(1/30);
+			engine.update(1/30);
 		});
 	}
 	
