@@ -1,7 +1,5 @@
 package com.jumper.mutator;
-import com.jumper.model.CollisionNode;
 import com.jumper.model.Movement;
-import com.jumper.model.MoveNode;
 import com.jumper.model.Pos;
 import nme.errors.Error;
 import com.jumper.model.View;
@@ -39,23 +37,7 @@ class Collision implements ISystem
 		
 	}
 	public function update(time:Float):Void {
-		var current:Int=0;
-		while (current < viewList.length) {
-			var view = viewList[current];
-			var collider = colList[current];
-			collider.colliders = [];
-			var curCol:Int = 0;
-			while (curCol < viewList.length) {
-				if (collider != colList[curCol] && viewList[curCol].hitTestObject(view)) {
-					collider.colliders.push(new CollisionNode(colList[curCol], posList[curCol]));
-					//collider.colPositions.push(viewList[curCol]);
-				}
-				curCol++;
-			}
-			//pos.pt.x += movement.vel.x;
-			//pos.pt.y += movement.vel.y;
-			current++;
-		}
+
 	}
 	
 	/* INTERFACE ISystem */

@@ -79,9 +79,9 @@ class Engine extends MovieClip
 	public function addSystem(system:ISystem):Void {
 		systems.push(system);
 	}
-	/*public function removeEntity(entity:Entity):Void {
-		
-	}*/
+	public function removeEntity(entity:Entity):Void {
+		this.entities.remove(entity);
+	}
 	
 	public function getEntitiesById(entityId:Int):Array<Entity>
 	{

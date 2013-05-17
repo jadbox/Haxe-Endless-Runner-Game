@@ -19,7 +19,7 @@ class Pos
 	public var onGround:Bool;
 	public var onGroundLast:Bool;
 	
-	public function new(width:Float = 0, height:Float = 0) 
+	public function new() 
 	{
 		pos = new Vector2();
 		posCorrect = new Vector2();

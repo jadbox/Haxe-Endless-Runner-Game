@@ -14,6 +14,7 @@ import com.jumper.Constants;
 import com.jumper.Engine;
 import com.jumper.Entity;
 import com.jumper.geom.Collide;
+import com.jumper.model.Stats;
 
 using Lambda;
 
@@ -231,12 +232,16 @@ class PlayerMove extends Move
 		super.collide(time);
 		EpicGameJam.engine.getEntitiesById(3).iter(function(e:Entity) {
 			var enemyPos:Pos = e.fetch(Pos);
-			trace("enemyPos " + enemyPos.pos.m_x + " , " + enemyPos.pos.m_x + "half extents " + enemyPos.halfExtents.m_x + " , " + enemyPos.halfExtents.m_y);
+			//trace("enemyPos " + enemyPos.pos.m_x + " , " + enemyPos.pos.m_x + "half extents " + enemyPos.halfExtents.m_x + " , " + enemyPos.halfExtents.m_y);
 			var enemyAabb:AABB = new AABB(enemyPos.pos, enemyPos.halfExtents);
 			var collided:Bool = Collide.AabbVsAabb( this, enemyAabb, m_contact, Map.WorldCoordsToTileX(enemyPos.pos.m_x), Map.WorldCoordsToTileY(enemyPos.pos.m_y), m_map, false );
 			if (collided) trace("contact normal " + m_contact.m_normal + " dist " + m_contact.m_dist);
 			//else trace("did not collide");
 			collisionResponse(m_contact.m_normal, m_contact.m_dist, time);
+			if (m_contact.m_dist <= 1) {
+				var enemyStats:Stats = e.fetch(Stats);
+				if(null != enemyStats) enemyStats.health -= 10;
+			}
 		});
 	}
 	

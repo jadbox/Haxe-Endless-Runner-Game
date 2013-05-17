@@ -8,7 +8,7 @@ package com.jumper.model;
 class Collider 
 {
 
-	public var colliders:Array<CollisionNode>;
+	//public var colliders:Array<CollisionNode>;
 	//public var colPositions:Array<View>;
 	public var kind:String;
 	public var width:Float;
@@ -16,7 +16,7 @@ class Collider
 	
 	public function new(kind:String = "default", width:Float = 0, height:Float = 0) 
 	{
-		colliders = new Array<CollisionNode>();
+		//colliders = new Array<CollisionNode>();
 		//colPositions = new Array<View>();
 		this.kind = kind;
 		this.width = width;

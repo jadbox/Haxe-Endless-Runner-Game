@@ -5,6 +5,7 @@ import com.jumper.maths.Vector2;
 import com.jumper.level.TileTypes;
 import com.jumper.model.Pos;
 import com.jumper.maths.Vector2;
+import com.jumper.model.Stats;
 import nme.display.Bitmap;
 import nme.display.MovieClip;
 import nme.display.Sprite;
@@ -86,14 +87,6 @@ class LevelBuilder
 					gameEngine.playerMovement.add(gameEngine.player);
 					gameEngine.scene.add(gameEngine.player);
 					}
-					//tile = new MovieClip();
-					//tile.addChild(playerView);
-					//tile = m_player = new Player();
-					//m_player.Initialise(tilePos, map, EpicGameJam.gameJam);
-					//m_player.addChild(playerView);
-					//playerView.x -= Constants.kPlayerWidth / 2;
-					//playerView.y -= Constants.kPlayerWidth / 2;
-					//tilePos = m_player.m_Pos;
 					
 				}
 				case TileTypes.kEnemy:
@@ -105,7 +98,7 @@ class LevelBuilder
 					enemyPos.setExtents(Constants.enemyWidth, Constants.enemyHeight);
 					var enemyView:View = new View();
 					var enemySprite:Sprite = new Sprite();
-					enemy.set([enemyPos, enemyView]);
+					enemy.set([enemyPos, enemyView, new Stats()]);
 					enemySprite.graphics.beginFill(0xffff00, .6);
 					enemySprite.graphics.drawRect(0, 0, Constants.enemyWidth, Constants.enemyHeight);
 					enemySprite.x -= Constants.enemyWidth/2;
@@ -116,8 +109,6 @@ class LevelBuilder
 					//enemyBmp.scaleX = enemyBmp.scaleY = .12;
 					//enemyBmp.x = enemySprite.width / 2 - enemyBmp.width / 2;
 					//enemySprite.addChild(enemyBmp);
-					
-					
 					gameEngine.enemyMovement.add(enemy);
 					gameEngine.scene.add(enemy);
 					

@@ -1,6 +1,5 @@
 package com.jumper.mutator;
 
-import com.jumper.model.DisplayNode;
 import com.jumper.model.Pos;
 import com.jumper.model.View;
 import nme.display.Sprite;

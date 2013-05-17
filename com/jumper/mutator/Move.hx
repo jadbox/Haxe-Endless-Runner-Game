@@ -2,7 +2,6 @@ package com.jumper.mutator;
 
 import com.jumper.geom.AABB;
 import com.jumper.model.Movement;
-import com.jumper.model.MoveNode;
 import com.jumper.model.Pos;
 import nme.errors.Error;
 import com.jumper.maths.Vector2;
@@ -127,16 +126,6 @@ class Move implements ISystem, implements IAABB
 		}
 		
 	}
-	//implementing IAABB
-	public function getCentre():Vector2
-	{
-		return currentPos.pos;
-	}
-	
-	public function getHalfExtents():Vector2
-	{
-		return currentPos.halfExtents;
-	}
 	
 	/// <summary>
 	/// Collision Reponse - remove normal velocity
@@ -179,6 +168,17 @@ class Move implements ISystem, implements IAABB
 		}
 	}
 	
+	//implementing IAABB
+	public function getCentre():Vector2
+	{
+		return currentPos.pos;
+	}
+	
+	public function getHalfExtents():Vector2
+	{
+		return currentPos.halfExtents;
+	}
+	
 	function landingTransition( ):Void
 	{
 	}
@@ -197,4 +197,6 @@ class Move implements ISystem, implements IAABB
 	{
 		return false;
 	}
+	
+	
 }
