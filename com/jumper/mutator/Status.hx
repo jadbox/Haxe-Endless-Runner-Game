@@ -32,8 +32,8 @@ class Status implements ISystem
 	{
 		current = 0;
 		while (current < entityList.length) {
-			trace(statsList[current]);
-			trace(entityList[current]);
+			//trace(statsList[current]);
+			//trace(entityList[current]);
 			if (statsList[current].health < 1) entityList[current].destroy();
 			else current++;
 		}

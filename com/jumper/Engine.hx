@@ -11,13 +11,14 @@ import com.jumper.model.View;
 import com.jumper.mutator.Collision;
 import com.jumper.mutator.PlayerMove;
 import com.jumper.mutator.Scene;
-
+import com.jumper.mutator.SpriteAnimate;
 import com.jumper.mutator.Move;
 import com.jumper.level.Map;
 
 import com.jumper.maths.Vector2;
 import com.jumper.level.TileTypes;
 import com.jumper.pools.VectorPool;
+
 
 using Lambda;
 
@@ -35,6 +36,7 @@ class Engine extends MovieClip
 	public var enemyMovement:EnemyMove;
 	public var collision:Collision;
 	public var status:Status;
+	public var spriteAnimate:SpriteAnimate;
 	
 	public var map:Map;
 	
@@ -64,6 +66,7 @@ class Engine extends MovieClip
 		addSystem(playerMovement = new PlayerMove(map, EpicGameJam.gameJam));
 		addSystem(collision = new Collision());
 		addSystem(status = new Status());
+		addSystem(spriteAnimate = new SpriteAnimate());
 		
 		var lvlBuild:LevelBuilder = new LevelBuilder(this);
 		lvlBuild.constructLevel(map);
