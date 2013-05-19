@@ -1,5 +1,6 @@
 package com.jumper.mutator;
 
+import com.jumper.Entity;
 import com.jumper.geom.AABB;
 import com.jumper.model.Movement;
 import com.jumper.model.Pos;
@@ -45,10 +46,11 @@ class Move implements ISystem, implements IAABB
 		m_contact = new Contact( );
 	}
 	public function remove(entity:Entity):Void {
-		posList.push(entity.fetch(Pos));
+		posList.remove(entity.fetch(Pos));
 		//moveList.push(entity.fetch(Movement));
 	}
 	public function add(entity:Entity):Void {
+		entity.destructionListener(function(e:Entity) { remove(e); } );
 		var pos:Pos = entity.fetch(Pos);
 		//pos.radius = Constants.kPlayerWidth / 2;
 		//pos.halfExtents = new Vector2( pos.radius, Constants.kPlayerHeight / 2 );

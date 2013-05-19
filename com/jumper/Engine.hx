@@ -1,6 +1,7 @@
 package com.jumper;
 
 import com.jumper.mutator.EnemyMove;
+import com.jumper.mutator.Status;
 import nme.display.MovieClip;
 import nme.display.Graphics;
 import nme.display.Sprite;
@@ -33,6 +34,7 @@ class Engine extends MovieClip
 	public var playerMovement:PlayerMove;
 	public var enemyMovement:EnemyMove;
 	public var collision:Collision;
+	public var status:Status;
 	
 	public var map:Map;
 	
@@ -61,6 +63,7 @@ class Engine extends MovieClip
 		addSystem(enemyMovement = new EnemyMove(map, EpicGameJam.gameJam));
 		addSystem(playerMovement = new PlayerMove(map, EpicGameJam.gameJam));
 		addSystem(collision = new Collision());
+		addSystem(status = new Status());
 		
 		var lvlBuild:LevelBuilder = new LevelBuilder(this);
 		lvlBuild.constructLevel(map);

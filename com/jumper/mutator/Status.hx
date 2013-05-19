@@ -4,6 +4,7 @@ import com.jumper.ISystem;
 import com.jumper.model.Stats;
 import com.jumper.Entity;
 import com.jumper.EpicGameJam;
+import nme.errors.Error;
 
 using Lambda;
 /**
@@ -17,6 +18,8 @@ class Status implements ISystem
 	private var statsList:Array<Stats>;
 	private var entityList:Array<Entity>;
 	
+	var current:Int;
+	
 	public function new() 
 	{
 		statsList = new Array<Stats>();
@@ -27,21 +30,29 @@ class Status implements ISystem
 	
 	public function update(time:Float):Void 
 	{
-		for (stat in statsList) {
-			if(stat.health < 1) EpicGameJam.engine.
+		current = 0;
+		while (current < entityList.length) {
+			trace(statsList[current]);
+			trace(entityList[current]);
+			if (statsList[current].health < 1) entityList[current].destroy();
+			else current++;
 		}
 		
 	}
 	
 	public function add(e:Entity):Void 
 	{
-		statsList.push(e.fetch(Stats));
+		var stats:Stats = e.fetch(Stats);
+		if (null == stats) throw new Error("Status requires a Stats component");
+		entityList.push(e);
+		e.destructionListener(function(e:Entity) { remove(e); } );
+		statsList.push(stats);
 	}
 	
 	public function remove(e:Entity):Void 
 	{
-		var entityStat:Stats = e.fetch(Stats);
-		statsList = Lambda.filter(statsList, function(stat) { return stat != entityStat } ).toArray();
+		statsList.remove(e.fetch(Stats));
+		entityList.remove(e);
 	}
 	
 }

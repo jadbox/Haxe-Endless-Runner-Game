@@ -23,7 +23,7 @@ import com.jumper.pools.VectorPool;
 class EpicGameJam extends Sprite {
 
 	public static var keyInput:KeyboardInput;
-    public static var touchInput:com.jumper.TouchInput;
+    public static var touchInput:TouchInput;
 	
 	// fast allocator for vector2s, cleared once per frame
 	static public var m_gTempVectorPool:VectorPool;

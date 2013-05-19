@@ -13,11 +13,16 @@ class Entity
 {
 	var lookup:Hash<Dynamic>;
 	var types:Int;
+	//systems register a callback for when this entity is destroyed
+	var onDestroyedCallbacks:Array<Entity -> Void>;
+	
+	
 	public var id:Int;
 	
 	public function new() 
 	{
 		lookup = new Hash<Dynamic>();
+		onDestroyedCallbacks = new Array<Entity -> Void>();
 		types = 0;
 	}
 	
@@ -47,6 +52,17 @@ class Entity
 	public function exists(n:Int):Bool {
 		return types & n != 0; //lookup.exists(n);
 	}
+	//entity needs a reference to each system it belongs to for when it is destroyed
+	public function destructionListener(onDestroyed:Entity -> Void):Void
+	{
+		onDestroyedCallbacks.push(onDestroyed);
+	}
+	
+	public function destroy():Void
+	{
+		EpicGameJam.engine.removeEntity(this);
+		for (cb in onDestroyedCallbacks) cb(this);
+	}
 	
 	//==== STATIC
 	public static var VIEW:Int = 1 << 0;
@@ -57,8 +73,8 @@ class Entity
 	private static var Models = [Stats, Movement, Pos, View];
 	private static var ModelMasks = [STATS, MOVEMENT, POS, VIEW];
 	
-	public static function make(systems:String):Entity {
-		var a = systems.split("+");
+	public static function make(components:String):Entity {
+		var a = components.split("+");
 		var e = new Entity();
 		for (i in a) {
 			i = "model." + i;
