@@ -5,9 +5,11 @@ import com.jumper.ISystem;
 import com.jumper.model.SpriteAnim;
 import com.jumper.Entity;
 import com.jumper.model.View;
+import nme.display.Sprite;
 import nme.display.Tilesheet;
 import nme.Assets;
 import nme.geom.Rectangle;
+import com.jumper.model.Pos;
 
 /**
  * ...
@@ -18,13 +20,18 @@ class SpriteAnimate implements ISystem
 {
 	var spriteAnimList:Array<SpriteAnim>;
 	var viewList:Array<View>;
+	var posList:Array<Pos>;
 	
 	var timeTilNextUpdate:Float;
+	
+	var root:Sprite;
 
-	public function new() 
+	public function new(root:Sprite) 
 	{
+		this.root = root;
 		spriteAnimList = new Array<SpriteAnim>();
 		viewList = new Array<View>();
+		posList = new Array<Pos>();
 		timeTilNextUpdate = .2;
 	}
 	
@@ -32,21 +39,30 @@ class SpriteAnimate implements ISystem
 	
 	public function update(time:Float):Void 
 	{
+		//clear the stage
+		root.graphics.clear();
+		
+		var updateAnimationFrame:Bool = false;
+		
 		var current:Int = 0;
 		if (timeTilNextUpdate > 0) {
 			timeTilNextUpdate -= time;
-			return;
 		}else {
 			timeTilNextUpdate = .2;
+			updateAnimationFrame = true;
 		}
 		while (current < spriteAnimList.length) {
 			var sprAnim:SpriteAnim = spriteAnimList[current];
 			var view:View = viewList[current];
+			var pos:Pos = posList[current];
 			view.graphics.clear();
 			trace(" frame " + sprAnim.currentFrame);
-			sprAnim.tileSheet.drawTiles(view.graphics, [-32, -64, sprAnim.currentFrame]);
-			sprAnim.currentFrame++;
-			if (sprAnim.currentFrame > 6) sprAnim.currentFrame = 1;
+			sprAnim.tileSheet.drawTiles(root.graphics, [pos.pos.m_x - pos.halfExtents.m_x, pos.pos.m_y - pos.halfExtents.m_y, sprAnim.currentFrame]);
+			if (updateAnimationFrame) {
+				sprAnim.currentFrame++;
+				if (sprAnim.currentFrame > 6) sprAnim.currentFrame = 1;
+			}
+			
 			
 			current++;
 		}
@@ -72,6 +88,7 @@ class SpriteAnimate implements ISystem
 		
 		spriteAnimList.push(spriteAnim);
 		viewList.push(view);
+		posList.push(e.fetch(Pos));
 	}
 	
 	public function remove(e:Entity):Void 

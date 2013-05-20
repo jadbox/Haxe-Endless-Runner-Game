@@ -15,6 +15,7 @@ import nme.events.Event;
 import nme.Lib;
 import com.jumper.mutator.Scene;
 import com.jumper.pools.VectorPool;
+import haxe.Timer;
 
 
 /**
@@ -31,6 +32,9 @@ class EpicGameJam extends Sprite {
 	static public var gameJam:EpicGameJam;
 	
 	static public var engine:Engine;
+	
+	var lastTimeStamp:Float;
+	var currentTimeStamp:Float;
 	
 	public function new () {
 		
@@ -55,9 +59,12 @@ class EpicGameJam extends Sprite {
 		
 		trace("screen size: " + Lib.current.stage.stageWidth + ", " + Lib.current.stage.stageHeight);
 		
-		
+		lastTimeStamp = Timer.stamp();
 		addEventListener(Event.ENTER_FRAME, function(e):Void {
-			engine.update(1/30);
+			currentTimeStamp = Timer.stamp();
+			//trace(currentTimeStamp - lastTimeStamp);
+			engine.update(currentTimeStamp - lastTimeStamp);
+			lastTimeStamp = currentTimeStamp;
 		});
 	}
 	

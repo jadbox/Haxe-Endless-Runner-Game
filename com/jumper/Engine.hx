@@ -66,7 +66,7 @@ class Engine extends MovieClip
 		addSystem(playerMovement = new PlayerMove(map, EpicGameJam.gameJam));
 		addSystem(collision = new Collision());
 		addSystem(status = new Status());
-		addSystem(spriteAnimate = new SpriteAnimate());
+		addSystem(spriteAnimate = new SpriteAnimate(this));
 		
 		var lvlBuild:LevelBuilder = new LevelBuilder(this);
 		lvlBuild.constructLevel(map);
