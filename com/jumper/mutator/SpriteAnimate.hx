@@ -10,6 +10,7 @@ import nme.display.Tilesheet;
 import nme.Assets;
 import nme.geom.Rectangle;
 import com.jumper.model.Pos;
+import com.jumper.model.SpriteData;
 
 /**
  * ...
@@ -33,6 +34,7 @@ class SpriteAnimate implements ISystem
 		viewList = new Array<View>();
 		posList = new Array<Pos>();
 		timeTilNextUpdate = .2;
+        var data:Array<SpriteData> = SpriteData.createSpriteData("assets/tileSheetConfig.xml");
 	}
 	
 	/* INTERFACE com.jumper.ISystem */
