@@ -10,6 +10,7 @@ import nme.display.Tilesheet;
 import nme.Assets;
 import nme.geom.Rectangle;
 import com.jumper.model.Pos;
+import com.jumper.model.SpriteData;
 
 /**
  * ...
