@@ -25,6 +25,8 @@ class SpriteAnimate implements ISystem
 	var timeTilNextUpdate:Float;
 	
 	var root:Sprite;
+	
+	var tileSheets:Xml;
 
 	public function new(root:Sprite) 
 	{
@@ -33,6 +35,13 @@ class SpriteAnimate implements ISystem
 		viewList = new Array<View>();
 		posList = new Array<Pos>();
 		timeTilNextUpdate = .2;
+		
+		var tileConStr = Assets.getText("assets/tileSheetConfig.xml");
+		var tileXml:Xml = Xml.parse(tileConStr);
+		trace(tileXml.elements().next().nodeName);
+		trace(tileXml.elements().next().elements().next().nodeName);
+		tileSheets = tileXml.elements().next();
+		var walkTile:Xml = tileXml.elements().next().elementsNamed("male_walk").next();
 	}
 	
 	/* INTERFACE com.jumper.ISystem */
@@ -56,7 +65,8 @@ class SpriteAnimate implements ISystem
 			var view:View = viewList[current];
 			var pos:Pos = posList[current];
 			view.graphics.clear();
-			trace(" frame " + sprAnim.currentFrame);
+			//trace(" frame " + sprAnim.currentFrame);
+			//TODO get anim sequence from tilesheets XML!!!!!!!!!!!!!!!
 			sprAnim.tileSheet.drawTiles(root.graphics, [pos.pos.m_x - pos.halfExtents.m_x, pos.pos.m_y - pos.halfExtents.m_y, sprAnim.currentFrame]);
 			if (updateAnimationFrame) {
 				sprAnim.currentFrame++;

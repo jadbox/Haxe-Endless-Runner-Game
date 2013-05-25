@@ -1,3 +1,6 @@
 <tilesheets>
-
+<tilesheet name="male_walk">
+	<anim name="stand" x="0" y="0" frames="1" />
+	<anim name="walk" x="32" y="0" frames="6" />
+</tilesheet>
 </tilesheets>

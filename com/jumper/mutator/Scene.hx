@@ -60,7 +60,9 @@ class Scene implements ISystem
 	}
 	public function remove(e:Entity):Void {
 		posList.remove(e.fetch(Pos));
-		viewList.remove(e.fetch(View));
+		var v:View = e.fetch(View);
+		root.removeChild(v);
+		viewList.remove(v);
 	}
 	
 }
