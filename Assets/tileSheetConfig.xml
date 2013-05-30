@@ -1,6 +1,7 @@
 <tilesheets>
 <tilesheet name="male_walk" dir="assets/maleSheet.png">
-	<anim name="stand" x="0" y="0" width="32" height="64" frames="1" />
+	<collider xOffset="0" yOffset="10" width="20" height="45"/>
+	<anim name="stand" x="0" y="0" width="32" height="64" frames="1"/>
 	<anim name="walk" x="32" y="0" width="32" height="64" frames="6" />
 </tilesheet>
 </tilesheets>

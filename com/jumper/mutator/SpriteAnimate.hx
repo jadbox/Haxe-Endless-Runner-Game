@@ -40,11 +40,6 @@ class SpriteAnimate implements ISystem
 		timeTilNextUpdate = .2;
 		
 		var tileConStr = Assets.getText("assets/tileSheetConfig.xml");
-		var tileXml:Xml = Xml.parse(tileConStr);
-		trace(tileXml.elements().next().nodeName);
-		trace(tileXml.elements().next().elements().next().nodeName);
-		tileSheets = tileXml.elements().next();
-		var walkTile:Xml = tileXml.elements().next().elementsNamed("male_walk").next();
 		
 		spriteDataCollection = SpriteData.createSpriteData(tileConStr);
 	}
@@ -75,7 +70,7 @@ class SpriteAnimate implements ISystem
 			var spriteData:SpriteData = getSpriteDataByName(sprAnim.sheetName);
 			var animData:AnimData = spriteData.getAnimByName(sprAnim.animName);
 			
-			spriteData.tileSheet.drawTiles(root.graphics, [pos.pos.m_x - (animData.width/2), pos.pos.m_y - (animData.height/2), sprAnim.currentFrame]);
+			spriteData.tileSheet.drawTiles(root.graphics, [pos.pos.m_x - (animData.width/2) - spriteData.collider.xOffset, pos.pos.m_y - (animData.height/2) - spriteData.collider.yOffset, sprAnim.currentFrame]);
 			if (updateAnimationFrame) {
 				sprAnim.currentFrame++;
 				trace("currentFrame: " + sprAnim.currentFrame);
@@ -83,11 +78,21 @@ class SpriteAnimate implements ISystem
 			}
 			
 			//debug points
+			//Pos x,y
 			root.graphics.beginFill(0xff0000);
 			root.graphics.drawCircle(pos.pos.m_x, pos.pos.m_y, 2);
+			//Half Extents x,y
 			root.graphics.beginFill(0xffff00);
 			root.graphics.drawCircle(pos.pos.m_x - pos.halfExtents.m_x, pos.pos.m_y - pos.halfExtents.m_y, 2);
-			
+			//animation Pos x,y
+			root.graphics.beginFill(0x00ffff);
+			root.graphics.drawCircle(pos.pos.m_x - (animData.width / 2), pos.pos.m_y - (animData.height / 2), 2);
+			//animation rect
+			root.graphics.beginFill(0x000fff, .4);
+			root.graphics.drawRect(pos.pos.m_x - (animData.width / 2), pos.pos.m_y - (animData.height / 2), animData.width, animData.height);
+			//collider rect
+			root.graphics.beginFill(0x0000ff, .5);
+			root.graphics.drawRect(pos.pos.m_x - (spriteData.collider.width/2), pos.pos.m_y - (spriteData.collider.height/2), spriteData.collider.width, spriteData.collider.height);
 			current++;
 		}
 	}
@@ -118,7 +123,10 @@ class SpriteAnimate implements ISystem
 		
 		spriteAnimList.push(spriteAnim);
 		viewList.push(view);
-		posList.push(e.fetch(Pos));
+		var pos:Pos = e.fetch(Pos);
+		var spriteData:SpriteData = getSpriteDataByName(spriteAnim.sheetName);
+		pos.setExtents(spriteData.collider.width, spriteData.collider.height);
+		posList.push(pos);
 	}
 	
 	public function remove(e:Entity):Void 

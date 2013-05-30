@@ -79,11 +79,11 @@ class LevelBuilder
 					playerSpriteAnim.sheetName = "male_walk";
 					var playerSprite:Sprite = new Sprite();
 					gameEngine.player.set([playerPos, playerView, playerSpriteAnim, new Stats(30)]);
-					playerSprite.graphics.beginFill(0x00ff00, .5);
+					/*playerSprite.graphics.beginFill(0x00ff00, .5);
 					playerSprite.graphics.drawRect(0, 0, Constants.kPlayerWidth, Constants.kPlayerHeight);
 					playerSprite.x -= Constants.kPlayerWidth / 2;
 					playerSprite.y -= Constants.kPlayerHeight / 2;
-					playerView.addChild(playerSprite);
+					playerView.addChild(playerSprite);*/
 					//var charBmp:Bitmap = new Bitmap(Assets.getBitmapData("assets/uglyduck.png"));
 					//playerSprite.addChild(charBmp);
 					//charBmp.y -= charBmp.height / 2;

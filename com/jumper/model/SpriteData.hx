@@ -21,11 +21,19 @@ using Lambda;
 	 public var frameIds:Array<Int>;
  }
  
+ typedef ColliderData = {
+	public var xOffset:Float;
+	public var yOffset:Float;
+	public var width:Float;
+	public var height:Float;
+ }
+ 
 class SpriteData 
 {
 	public var sheetName:String;
     public var tileSheet:Tilesheet;
     public var animations:Array<AnimData>;
+	public var collider:ColliderData;
     
     static public function createSpriteData(spriteDataRaw:String):Array<SpriteData>
     {
@@ -47,6 +55,13 @@ class SpriteData
 			spriteData.sheetName = ts.get("name");
 			var idCount:Int = 0;
 			spriteDataArray.push(spriteData);
+			var colliderElement:Xml = ts.elementsNamed("collider").next();
+			spriteData.collider = {
+				xOffset:Std.parseFloat(colliderElement.get("xOffset")),
+				yOffset:Std.parseFloat(colliderElement.get("yOffset")),
+				width:Std.parseFloat(colliderElement.get("width")),
+				height:Std.parseFloat(colliderElement.get("height"))
+			}
 			
 			for (anim in ts.elementsNamed("anim")) {
 				trace(anim);
