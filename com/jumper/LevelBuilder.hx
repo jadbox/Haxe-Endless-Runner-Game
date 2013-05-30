@@ -75,9 +75,11 @@ class LevelBuilder
 					playerPos.pos = tilePos;
 					var playerView:View = new View();
 					var playerSpriteAnim:SpriteAnim = new SpriteAnim();
+					playerSpriteAnim.animName = "walk";
+					playerSpriteAnim.sheetName = "male_walk";
 					var playerSprite:Sprite = new Sprite();
 					gameEngine.player.set([playerPos, playerView, playerSpriteAnim, new Stats(30)]);
-					playerSprite.graphics.beginFill(0x00ff00);
+					playerSprite.graphics.beginFill(0x00ff00, .5);
 					playerSprite.graphics.drawRect(0, 0, Constants.kPlayerWidth, Constants.kPlayerHeight);
 					playerSprite.x -= Constants.kPlayerWidth / 2;
 					playerSprite.y -= Constants.kPlayerHeight / 2;

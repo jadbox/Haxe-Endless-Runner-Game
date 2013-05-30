@@ -28,6 +28,8 @@ class SpriteAnimate implements ISystem
 	var root:Sprite;
 	
 	var tileSheets:Xml;
+	
+	var spriteDataCollection:Array<SpriteData>;
 
 	public function new(root:Sprite) 
 	{
@@ -43,6 +45,8 @@ class SpriteAnimate implements ISystem
 		trace(tileXml.elements().next().elements().next().nodeName);
 		tileSheets = tileXml.elements().next();
 		var walkTile:Xml = tileXml.elements().next().elementsNamed("male_walk").next();
+		
+		spriteDataCollection = SpriteData.createSpriteData(tileConStr);
 	}
 	
 	/* INTERFACE com.jumper.ISystem */
@@ -68,15 +72,30 @@ class SpriteAnimate implements ISystem
 			view.graphics.clear();
 			//trace(" frame " + sprAnim.currentFrame);
 			//TODO get anim sequence from tilesheets XML!!!!!!!!!!!!!!!
-			sprAnim.tileSheet.drawTiles(root.graphics, [pos.pos.m_x - pos.halfExtents.m_x, pos.pos.m_y - pos.halfExtents.m_y, sprAnim.currentFrame]);
+			var spriteData:SpriteData = getSpriteDataByName(sprAnim.sheetName);
+			var animData:AnimData = spriteData.getAnimByName(sprAnim.animName);
+			
+			spriteData.tileSheet.drawTiles(root.graphics, [pos.pos.m_x - (animData.width/2), pos.pos.m_y - (animData.height/2), sprAnim.currentFrame]);
 			if (updateAnimationFrame) {
 				sprAnim.currentFrame++;
-				if (sprAnim.currentFrame > 6) sprAnim.currentFrame = 1;
+				trace("currentFrame: " + sprAnim.currentFrame);
+				if (sprAnim.currentFrame > animData.frameIds[animData.frameIds.length-1]) sprAnim.currentFrame = animData.frameIds[0];
 			}
 			
+			//debug points
+			root.graphics.beginFill(0xff0000);
+			root.graphics.drawCircle(pos.pos.m_x, pos.pos.m_y, 2);
+			root.graphics.beginFill(0xffff00);
+			root.graphics.drawCircle(pos.pos.m_x - pos.halfExtents.m_x, pos.pos.m_y - pos.halfExtents.m_y, 2);
 			
 			current++;
 		}
+	}
+	
+	function getSpriteDataByName(sheetName:String):SpriteData {
+		return Lambda.filter(spriteDataCollection, function(sprData) {
+			return sprData.sheetName == sheetName;
+		}).first();
 	}
 	
 	public function add(e:Entity):Void 
@@ -85,7 +104,7 @@ class SpriteAnimate implements ISystem
 		var view:View = e.fetch(View);
 		var maleSheetImg:BitmapData = Assets.getBitmapData("assets/maleSheet.png");
 		trace("male sheet " + maleSheetImg);
-		var tileSheet:Tilesheet = new Tilesheet(maleSheetImg);
+		/*var tileSheet:Tilesheet = new Tilesheet(maleSheetImg);
 		//tileSheet.addTileRect(new Rectangle(0, 0, 32, 64));
 		//tileSheet.addTileRect(new Rectangle(32, 0, 32, 64));
 		var i:Int = 0;
@@ -95,7 +114,7 @@ class SpriteAnimate implements ISystem
 			i++;
 		}
 		
-		spriteAnim.tileSheet = tileSheet;
+		spriteAnim.tileSheet = tileSheet;*/
 		
 		spriteAnimList.push(spriteAnim);
 		viewList.push(view);

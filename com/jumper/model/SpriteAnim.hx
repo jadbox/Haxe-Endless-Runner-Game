@@ -13,7 +13,8 @@ enum SpriteId {
 class SpriteAnim 
 {
 	public var spriteId:SpriteId;
-	public var anim:String;
+	public var animName:String;
+	public var sheetName:String;
 	public var currentFrame:Int;
 	
 	public function new() 
