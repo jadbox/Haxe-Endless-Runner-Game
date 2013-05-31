@@ -1,7 +1,11 @@
 <tilesheets>
 <tilesheet name="male_walk" dir="assets/maleSheet.png">
 	<collider xOffset="0" yOffset="10" width="20" height="45"/>
-	<anim name="stand" x="0" y="0" width="32" height="64" frames="1"/>
-	<anim name="walk" x="32" y="0" width="32" height="64" frames="6" />
+	<anim name="stand" x="0" y="0" width="32" height="64" frames="1" rows="1" />
+	<anim name="walk" x="32" y="0" width="32" height="64" frames="6" rows="1" />
+</tilesheet>
+<tilesheet name = "fat_cartwheel" dir="assets/cartwheels.png">
+	<collider xOffset="0" yOffset="0" width="190" height="185"/>
+	<anim name="cartwheel" x="0" y="0" width="221" height="212" frames="20" rows="5"/>
 </tilesheet>
 </tilesheets>

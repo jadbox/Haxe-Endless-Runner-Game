@@ -37,7 +37,7 @@ class SpriteAnimate implements ISystem
 		spriteAnimList = new Array<SpriteAnim>();
 		viewList = new Array<View>();
 		posList = new Array<Pos>();
-		timeTilNextUpdate = .2;
+		timeTilNextUpdate = .1;
 		
 		var tileConStr = Assets.getText("assets/tileSheetConfig.xml");
 		
@@ -57,7 +57,7 @@ class SpriteAnimate implements ISystem
 		if (timeTilNextUpdate > 0) {
 			timeTilNextUpdate -= time;
 		}else {
-			timeTilNextUpdate = .2;
+			timeTilNextUpdate = .1;
 			updateAnimationFrame = true;
 		}
 		while (current < spriteAnimList.length) {
@@ -70,7 +70,7 @@ class SpriteAnimate implements ISystem
 			var spriteData:SpriteData = getSpriteDataByName(sprAnim.sheetName);
 			var animData:AnimData = spriteData.getAnimByName(sprAnim.animName);
 			
-			spriteData.tileSheet.drawTiles(root.graphics, [pos.pos.m_x - (animData.width/2) - spriteData.collider.xOffset, pos.pos.m_y - (animData.height/2) - spriteData.collider.yOffset, sprAnim.currentFrame]);
+			spriteData.tileSheet.drawTiles(root.graphics, [pos.pos.m_x, pos.pos.m_y, sprAnim.currentFrame, pos.scale], false, Tilesheet.TILE_SCALE);
 			if (updateAnimationFrame) {
 				sprAnim.currentFrame++;
 				trace("currentFrame: " + sprAnim.currentFrame);
@@ -86,13 +86,15 @@ class SpriteAnimate implements ISystem
 			root.graphics.drawCircle(pos.pos.m_x - pos.halfExtents.m_x, pos.pos.m_y - pos.halfExtents.m_y, 2);
 			//animation Pos x,y
 			root.graphics.beginFill(0x00ffff);
-			root.graphics.drawCircle(pos.pos.m_x - (animData.width / 2), pos.pos.m_y - (animData.height / 2), 2);
+			root.graphics.drawCircle(pos.pos.m_x - (animData.width / 2) * pos.scale, pos.pos.m_y - (animData.height / 2) * pos.scale, 2);
 			//animation rect
 			root.graphics.beginFill(0x000fff, .4);
-			root.graphics.drawRect(pos.pos.m_x - (animData.width / 2), pos.pos.m_y - (animData.height / 2), animData.width, animData.height);
+			root.graphics.drawRect(pos.pos.m_x - (animData.width / 2) * pos.scale, pos.pos.m_y - (animData.height / 2) * pos.scale, animData.width * pos.scale, animData.height * pos.scale);
 			//collider rect
 			root.graphics.beginFill(0x0000ff, .5);
-			root.graphics.drawRect(pos.pos.m_x - (spriteData.collider.width/2), pos.pos.m_y - (spriteData.collider.height/2), spriteData.collider.width, spriteData.collider.height);
+			var bounds:Rectangle = pos.getBounds();
+			root.graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+			//root.graphics.drawRect(pos.pos.m_x - (spriteData.collider.width/2) * pos.scale, pos.pos.m_y - (spriteData.collider.height/2) * pos.scale, spriteData.collider.width * pos.scale, spriteData.collider.height * pos.scale);
 			current++;
 		}
 	}
@@ -107,19 +109,6 @@ class SpriteAnimate implements ISystem
 	{
 		var spriteAnim:SpriteAnim = e.fetch(SpriteAnim);
 		var view:View = e.fetch(View);
-		var maleSheetImg:BitmapData = Assets.getBitmapData("assets/maleSheet.png");
-		trace("male sheet " + maleSheetImg);
-		/*var tileSheet:Tilesheet = new Tilesheet(maleSheetImg);
-		//tileSheet.addTileRect(new Rectangle(0, 0, 32, 64));
-		//tileSheet.addTileRect(new Rectangle(32, 0, 32, 64));
-		var i:Int = 0;
-		while (i < 7)
-		{
-			tileSheet.addTileRect(new Rectangle(i*32,0,32,64));
-			i++;
-		}
-		
-		spriteAnim.tileSheet = tileSheet;*/
 		
 		spriteAnimList.push(spriteAnim);
 		viewList.push(view);

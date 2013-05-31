@@ -1,6 +1,7 @@
 package com.jumper.model;
 import nme.display.Tilesheet;
 import nme.Assets;
+import nme.geom.Point;
 import nme.geom.Rectangle;
 
 using Lambda;
@@ -76,10 +77,26 @@ class SpriteData
 					frameIds:new Array<Int>()
 				};
 				var frameCount:Int = Std.parseInt(anim.get("frames"));
+				var rowCount:Int = Std.parseInt(anim.get("rows"));
+				var framesPerRow:Int = cast((frameCount - (frameCount % rowCount)) / rowCount, Int);
+				//increment when moving to the next row
+				var currentRow:Int = 0;
+				//when greater than framesPerRow, move to next row and reset
+				var currentFrameInRow:Int = 0;
 				var i:Int = 0;
 				while ( i < frameCount) {
-					spriteData.tileSheet.addTileRect(new Rectangle(animData.x + animData.width * i, animData.y, animData.width, animData.height));
-					animData.frameIds.push(i+idCount);
+					spriteData.tileSheet.addTileRect(
+						new Rectangle(animData.x + animData.width * currentFrameInRow, animData.y + animData.height * currentRow, animData.width, animData.height),
+						new Point(animData.width / 2 + spriteData.collider.xOffset, animData.height / 2 + spriteData.collider.yOffset)
+					);
+					//increments idcount for this tilesheet, used to reference tiles with drawTile
+					animData.frameIds.push(i + idCount);
+					//move along the rows and frames
+					currentFrameInRow++;
+					if (currentFrameInRow == framesPerRow) {
+						currentFrameInRow = 0;
+						currentRow++;
+					}
 					i++;
 				}
 				idCount += frameCount;

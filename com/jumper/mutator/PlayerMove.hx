@@ -120,32 +120,7 @@ class PlayerMove extends Move
         moveSpeed = currentPos.onGround ? kWalkSpeed : kWalkSpeed / 2;
         
         m_velTarget.Clear();
-		var pi = Math.PI;
 		//angle controls
-        //LEFT
-        /*if (m_touch.getCurAngle() >= pi/2 && m_touch.getCurAngle() <= pi) {
-            currentPos.vel.m_x -= moveSpeed;
-			m_tryToMove = true;
-        }
-        //RIGHT
-        if (m_touch.getCurAngle() > 0 && m_touch.getCurAngle() < pi/2) {
-            currentPos.vel.m_x += moveSpeed;
-			m_tryToMove = true;
-        }*/
-		//direction controls
-		/*while (swipes.length > 0) {
-			switch(swipes.pop()) {
-				case "left":
-					currentPos.vel.m_x -= moveSpeed;
-					m_tryToMove = true;
-				case "right":
-					currentPos.vel.m_x -= moveSpeed;
-					m_tryToMove = true;
-				case "up":
-				case "down":
-				default:
-			}
-		}*/
 		switch(direction) {
 			case "left":
 				currentPos.vel.m_x -= moveSpeed;
