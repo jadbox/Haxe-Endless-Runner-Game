@@ -89,7 +89,7 @@ class LevelBuilder
 					//playerSprite.addChild(charBmp);
 					//charBmp.y -= charBmp.height / 2;
 					
-					gameEngine.spriteAnimate.add(gameEngine.player);
+					gameEngine.playerSpriteAnimate.add(gameEngine.player);
 					gameEngine.status.add(gameEngine.player);
 					gameEngine.playerMovement.add(gameEngine.player);
 					gameEngine.scene.add(gameEngine.player);

@@ -15,6 +15,7 @@ import com.jumper.Engine;
 import com.jumper.Entity;
 import com.jumper.geom.Collide;
 import com.jumper.model.Stats;
+import com.jumper.model.SpriteAnim;
 
 using Lambda;
 
@@ -88,6 +89,7 @@ class PlayerMove extends Move
 	
 	override function processMove(time:Float):Void
 	{
+		
         touchControl(time);
 		//keyboardControl(time);
 		//integrate velocity

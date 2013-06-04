@@ -127,7 +127,7 @@ class Map
 	/// </summary>
 	public function GetTileSafe( map:Array<Int>, i:Int, j:Int ):Int
 	{
-		if ( i>=0&&i<m_Width&&j>=0&&j<m_Height )
+		if ( i>=0&&i<m_Width&&j>=0&&j<m_Height  && null != map)
 		{
 			return map[j*m_Width+i];
 		}else 

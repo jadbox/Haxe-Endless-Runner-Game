@@ -3,6 +3,14 @@
 	<collider xOffset="0" yOffset="10" width="20" height="45"/>
 	<anim name="stand" x="0" y="0" width="32" height="64" frames="1" rows="1" />
 	<anim name="walk" x="32" y="0" width="32" height="64" frames="6" rows="1" />
+	<anim name="crouching" x="224" y="0" width="32" height="64" frames="3" rows="1" />
+	<anim name="stance" x="0" y="64" width="32" height="64" frames="1" rows="1" />
+	<anim name="hit_high" x="32" y="64" width="32" height="64" frames="2" rows="1" />
+	<anim name="hit_low" x="96" y="64" width="32" height="64" frames="2" rows="1" />
+	<anim name="hit_crouch" x="160" y="64" width="32" height="64" frames="2" rows="1" />
+	<anim name="jump_rise" x="192" y="64" width="32" height="64" frames="1" rows="1" />
+	<anim name="jump_peak" x="224" y="64" width="32" height="64" frames="1" rows="1" />
+	<anim name="jump_fall" x="256" y="64" width="32" height="64" frames="1" rows="1" />
 </tilesheet>
 <tilesheet name = "fat_cartwheel" dir="assets/cartwheels.png">
 	<collider xOffset="0" yOffset="0" width="190" height="185"/>

@@ -19,6 +19,9 @@ import com.jumper.model.SpriteData;
 
 class SpriteAnimate implements ISystem
 {
+	//draws debug rects for animations
+	private static inline var IsDebug:Bool = true;
+	
 	var spriteAnimList:Array<SpriteAnim>;
 	var viewList:Array<View>;
 	var posList:Array<Pos>;
@@ -30,6 +33,10 @@ class SpriteAnimate implements ISystem
 	var tileSheets:Xml;
 	
 	var spriteDataCollection:Array<SpriteData>;
+	
+	private var curPos:Pos;
+	private var curSpriteAnim:SpriteAnim;
+	private var curView:View;
 
 	public function new(root:Sprite) 
 	{
@@ -49,7 +56,7 @@ class SpriteAnimate implements ISystem
 	public function update(time:Float):Void 
 	{
 		//clear the stage
-		root.graphics.clear();
+		//root.graphics.clear();
 		
 		var updateAnimationFrame:Bool = false;
 		
@@ -61,43 +68,49 @@ class SpriteAnimate implements ISystem
 			updateAnimationFrame = true;
 		}
 		while (current < spriteAnimList.length) {
-			var sprAnim:SpriteAnim = spriteAnimList[current];
-			var view:View = viewList[current];
-			var pos:Pos = posList[current];
-			view.graphics.clear();
-			//trace(" frame " + sprAnim.currentFrame);
-			//TODO get anim sequence from tilesheets XML!!!!!!!!!!!!!!!
-			var spriteData:SpriteData = getSpriteDataByName(sprAnim.sheetName);
-			var animData:AnimData = spriteData.getAnimByName(sprAnim.animName);
+			curSpriteAnim = spriteAnimList[current];
+			curView = viewList[current];
+			curPos = posList[current];
+			curView.graphics.clear();
+			//set animation sequences based on game state
+			setAnimations();
 			
-			spriteData.tileSheet.drawTiles(root.graphics, [pos.pos.m_x, pos.pos.m_y, sprAnim.currentFrame, pos.scale], false, Tilesheet.TILE_SCALE);
+			
+			//trace(" frame " + sprAnim.currentFrame);
+			var spriteData:SpriteData = getSpriteDataByName(curSpriteAnim.sheetName);
+			var animData:AnimData = spriteData.getAnimByName(curSpriteAnim.animName);
+			
+			spriteData.tileSheet.drawTiles(root.graphics, [curPos.pos.m_x, curPos.pos.m_y, curSpriteAnim.currentFrame, curPos.scale], false, Tilesheet.TILE_SCALE);
 			if (updateAnimationFrame) {
-				sprAnim.currentFrame++;
-				trace("currentFrame: " + sprAnim.currentFrame);
-				if (sprAnim.currentFrame > animData.frameIds[animData.frameIds.length-1]) sprAnim.currentFrame = animData.frameIds[0];
+				curSpriteAnim.currentFrame++;
+				//trace("currentFrame: " + curSpriteAnim.currentFrame);
+				if (curSpriteAnim.currentFrame > animData.frameIds[animData.frameIds.length-1] || curSpriteAnim.currentFrame < animData.frameIds[0]) curSpriteAnim.currentFrame = animData.frameIds[0];
 			}
 			
 			//debug points
-			//Pos x,y
-			root.graphics.beginFill(0xff0000);
-			root.graphics.drawCircle(pos.pos.m_x, pos.pos.m_y, 2);
-			//Half Extents x,y
-			root.graphics.beginFill(0xffff00);
-			root.graphics.drawCircle(pos.pos.m_x - pos.halfExtents.m_x, pos.pos.m_y - pos.halfExtents.m_y, 2);
-			//animation Pos x,y
-			root.graphics.beginFill(0x00ffff);
-			root.graphics.drawCircle(pos.pos.m_x - (animData.width / 2) * pos.scale, pos.pos.m_y - (animData.height / 2) * pos.scale, 2);
-			//animation rect
-			root.graphics.beginFill(0x000fff, .4);
-			root.graphics.drawRect(pos.pos.m_x - (animData.width / 2) * pos.scale, pos.pos.m_y - (animData.height / 2) * pos.scale, animData.width * pos.scale, animData.height * pos.scale);
-			//collider rect
-			root.graphics.beginFill(0x0000ff, .5);
-			var bounds:Rectangle = pos.getBounds();
-			root.graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
-			//root.graphics.drawRect(pos.pos.m_x - (spriteData.collider.width/2) * pos.scale, pos.pos.m_y - (spriteData.collider.height/2) * pos.scale, spriteData.collider.width * pos.scale, spriteData.collider.height * pos.scale);
+			if (IsDebug) {
+				//Pos x,y
+				root.graphics.beginFill(0xff0000);
+				root.graphics.drawCircle(curPos.pos.m_x, curPos.pos.m_y, 2);
+				//Half Extents x,y
+				root.graphics.beginFill(0xffff00);
+				root.graphics.drawCircle(curPos.pos.m_x - curPos.halfExtents.m_x, curPos.pos.m_y - curPos.halfExtents.m_y, 2);
+				//animation Pos x,y
+				root.graphics.beginFill(0x00ffff);
+				root.graphics.drawCircle(curPos.pos.m_x - (animData.width / 2) * curPos.scale, curPos.pos.m_y - (animData.height / 2) * curPos.scale, 2);
+				//animation rect
+				root.graphics.beginFill(0x000fff, .4);
+				root.graphics.drawRect(curPos.pos.m_x - (animData.width / 2) * curPos.scale, curPos.pos.m_y - (animData.height / 2) * curPos.scale, animData.width * curPos.scale, animData.height * curPos.scale);
+				//collider rect
+				root.graphics.beginFill(0x0000ff, .5);
+				var bounds:Rectangle = curPos.getBounds();
+				root.graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+			}
 			current++;
 		}
 	}
+	//override me
+	private function setAnimations(){}
 	
 	function getSpriteDataByName(sheetName:String):SpriteData {
 		return Lambda.filter(spriteDataCollection, function(sprData) {

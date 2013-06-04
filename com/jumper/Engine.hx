@@ -1,6 +1,7 @@
 package com.jumper;
 
 import com.jumper.mutator.EnemyMove;
+import com.jumper.mutator.PlayerSpriteAnimate;
 import com.jumper.mutator.Status;
 import nme.display.MovieClip;
 import nme.display.Graphics;
@@ -37,6 +38,7 @@ class Engine extends MovieClip
 	public var collision:Collision;
 	public var status:Status;
 	public var spriteAnimate:SpriteAnimate;
+	public var playerSpriteAnimate:PlayerSpriteAnimate;
 	
 	public var map:Map;
 	
@@ -66,7 +68,9 @@ class Engine extends MovieClip
 		addSystem(playerMovement = new PlayerMove(map, EpicGameJam.gameJam));
 		addSystem(collision = new Collision());
 		addSystem(status = new Status());
+		addSystem(playerSpriteAnimate = new PlayerSpriteAnimate(this));
 		addSystem(spriteAnimate = new SpriteAnimate(this));
+		
 		
 		var lvlBuild:LevelBuilder = new LevelBuilder(this);
 		lvlBuild.constructLevel(map);
@@ -97,6 +101,8 @@ class Engine extends MovieClip
 		}).array();
 	}
 	public function update(time:Float):Void {
+		//we'll find a better place for this later
+		this.graphics.clear();
 		for (s in systems) s.update(time);
 		//m_player.Update(time);
 		m_camera.Update(time);
