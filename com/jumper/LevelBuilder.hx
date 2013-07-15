@@ -11,6 +11,7 @@ import nme.display.Bitmap;
 import nme.display.MovieClip;
 import nme.display.Sprite;
 import com.jumper.model.View;
+import com.jumper.model.Atk;
 import nme.Assets;
 
 class LevelBuilder
@@ -79,7 +80,7 @@ class LevelBuilder
 					playerSpriteAnim.animName = "walk";
 					playerSpriteAnim.sheetName = "male_walk";
 					//var playerSprite:Sprite = new Sprite();
-					gameEngine.player.set([playerPos, playerView, playerSpriteAnim, new Stats(30)]);
+					gameEngine.player.set([playerPos, playerView, playerSpriteAnim, new Stats(30), new Atk()]);
 					/*playerSprite.graphics.beginFill(0x00ff00, .5);
 					playerSprite.graphics.drawRect(0, 0, Constants.kPlayerWidth, Constants.kPlayerHeight);
 					playerSprite.x -= Constants.kPlayerWidth / 2;
@@ -93,6 +94,7 @@ class LevelBuilder
 					gameEngine.status.add(gameEngine.player);
 					gameEngine.playerMovement.add(gameEngine.player);
 					gameEngine.scene.add(gameEngine.player);
+					gameEngine.playerAttack.add(gameEngine.player);
 					}
 					
 				}
@@ -105,7 +107,7 @@ class LevelBuilder
 					enemy.id = TileTypes.kEnemy;
 					enemyPos.pos = tilePos;
 					enemyPos.setExtents(Constants.enemyWidth, Constants.enemyHeight);
-					enemyPos.scale = .4;
+					enemyPos.scale = .2;
 					
 					var enemySprite:Sprite = new Sprite();
 					enemy.set([enemyPos, enemyView, new Stats(10),enemySpriteAnim]);

@@ -85,7 +85,7 @@ class TouchInput
     {
         lastPos.m_x = e.stageX;
         lastPos.m_y = e.stageY;
-        trace("mdown " + e.stageX + " , " + e.stageY);
+        //trace("mdown " + e.stageX + " , " + e.stageY);
     }
     
     public function mouseUp(e:MouseEvent):Void
@@ -96,7 +96,7 @@ class TouchInput
 		if (radRotation < 0) radRotation += Constants.kTwoPi;
 		curAngle = radRotation;
         //curAngle = lastPos.Sub(new Vector2(e.stageX, e.stageY)).ToAngle();
-        trace("mup " + e.stageX + " , " + e.stageY + " curAngle: " + curAngle);
+        //trace("mup " + e.stageX + " , " + e.stageY + " curAngle: " + curAngle);
 		var absDeltaX = Math.abs(deltaX);
 		var absDeltaY = Math.abs(deltaY);
         if (absDeltaX + absDeltaY < 40)

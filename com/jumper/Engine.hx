@@ -1,6 +1,7 @@
 package com.jumper;
 
 import com.jumper.mutator.EnemyMove;
+import com.jumper.mutator.PlayerAttack;
 import com.jumper.mutator.PlayerSpriteAnimate;
 import com.jumper.mutator.Status;
 import nme.display.MovieClip;
@@ -30,6 +31,8 @@ using Lambda;
 
 class Engine extends MovieClip
 {
+	public static var root:MovieClip;
+	
 	private var systems:Array<ISystem>;
 	public var scene:Scene;
 	public var movement:Move;
@@ -39,6 +42,7 @@ class Engine extends MovieClip
 	public var status:Status;
 	public var spriteAnimate:SpriteAnimate;
 	public var playerSpriteAnimate:PlayerSpriteAnimate;
+	public var playerAttack:PlayerAttack;
 	
 	public var map:Map;
 	
@@ -55,6 +59,7 @@ class Engine extends MovieClip
 	{
 		super();
 		trace("hi engine");
+		Engine.root = this;
 		
 		map = new Map(this);
 		
@@ -70,6 +75,7 @@ class Engine extends MovieClip
 		addSystem(status = new Status());
 		addSystem(playerSpriteAnimate = new PlayerSpriteAnimate(this));
 		addSystem(spriteAnimate = new SpriteAnimate(this));
+		addSystem(playerAttack = new PlayerAttack());
 		
 		
 		var lvlBuild:LevelBuilder = new LevelBuilder(this);

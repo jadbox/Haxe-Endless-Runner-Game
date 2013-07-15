@@ -4,6 +4,7 @@ import com.jumper.model.Pos;
 import com.jumper.model.View;
 import com.jumper.promhx.Promise;
 import com.jumper.model.Stats;
+import com.jumper.model.Atk;
 /**
  * ...
  * @author Jonathan Dunlap
@@ -69,9 +70,10 @@ class Entity
 	public static var POS:Int = 1 << 1;
 	public static var MOVEMENT:Int = 1 << 2;
 	public static var STATS:Int = 1 << 3;
+	public static var ATK:Int = 1 << 4;
 	
-	private static var Models = [Stats, Movement, Pos, View];
-	private static var ModelMasks = [STATS, MOVEMENT, POS, VIEW];
+	private static var Models = [Atk, Stats, Movement, Pos, View];
+	private static var ModelMasks = [ATK, STATS, MOVEMENT, POS, VIEW];
 	
 	public static function make(components:String):Entity {
 		var a = components.split("+");
